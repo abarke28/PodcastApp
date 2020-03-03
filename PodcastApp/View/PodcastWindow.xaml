@@ -1,0 +1,100 @@
+﻿<Window x:Class="PodcastApp.View.PodcastWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PodcastApp.View"
+        xmlns:vm="clr-namespace:PodcastApp.ViewModel"
+        mc:Ignorable="d"
+        Title="Poor Yorrick Podcasts" Height="600" Width="750">
+    <Window.Resources>
+        <vm:MainVM x:Key="vm"/>
+    </Window.Resources>
+    <Grid DataContext="{Binding Source={StaticResource vm}}">
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="File">
+                    <MenuItem Header="Add New Podcast (RSS)"/>
+                    <Separator/>
+                    <MenuItem Header="Exit"/>
+                </MenuItem>
+            </Menu>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Label>
+                        <TextBlock Text="Podcasts" FontSize="24" FontWeight="Bold"/>
+                    </Label>
+                    <ListView ItemsSource="{Binding Podcasts}"
+                              SelectedItem="{Binding SelectedPodcast, Mode=TwoWay}"
+                              HorizontalAlignment="Left"
+                              Height="500"
+                              Width="370"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              BorderBrush="White">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="4*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" 
+                                           Source="{Binding ThumbnailFileUrl}" 
+                                           Visibility="Visible"
+                                           MinWidth="60"/>
+                                    <StackPanel Grid.Column="1">
+                                        <Label>
+                                            <TextBlock Text="{Binding Title}"
+                                            TextWrapping="WrapWithOverflow"
+                                            FontWeight="DemiBold"/>
+                                        </Label>
+                                        <Label>
+                                            <TextBlock Text="{Binding Description}"
+                                                       VerticalAlignment="Top"
+                                                       TextWrapping="WrapWithOverflow"
+                                                       Foreground="#5890cc"
+                                                       MaxHeight="30"/>
+                                        </Label>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <Label>
+                        <TextBlock Text="Episodes" FontSize="24" FontWeight="Bold"/>
+                    </Label>
+                    <ListView ItemsSource="{Binding Episodes}"
+                              HorizontalAlignment="Left"
+                              Height="500"
+                              Width="370"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.VerticalScrollBarVisibility="Visible"
+                              BorderBrush="White">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Label>
+                                        <TextBlock Text="{Binding Title}"
+                                           TextWrapping="WrapWithOverflow"
+                                           FontWeight="DemiBold"/>
+                                    </Label>
+                                    <Label>
+                                        <TextBlock Text="{Binding PubDate}"
+                                           Foreground="#5890cc"/>
+                                    </Label>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>
