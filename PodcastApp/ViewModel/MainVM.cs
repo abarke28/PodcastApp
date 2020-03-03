@@ -49,7 +49,7 @@ namespace PodcastApp.ViewModel
             //https://rss.art19.com/monday-morning-podcast
             //http://wakingup.libsyn.com/rss
             //https://audioboom.com/channels/4940872.rss
-
+            //git
             //SubscribePodcast();
         }
         public void ReadPodcasts()
