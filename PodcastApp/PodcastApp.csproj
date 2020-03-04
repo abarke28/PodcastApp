@@ -186,6 +186,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="View\AppResources\" />
     <Folder Include="View\UserControls\" />
   </ItemGroup>
   <ItemGroup>

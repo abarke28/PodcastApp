@@ -35,9 +35,9 @@ namespace PodcastApp.ViewModel
             get { return _selectedEpisode; }
             set { _selectedEpisode = value; }
         }
-
-        public BaseCommand NewPodcastCommand { get; set; }
         public BaseCommand ExitCommand { get; set; }
+        public BaseCommand NewPodcastCommand { get; set; }
+
         public MainVM()
         {
             Podcasts = new ObservableCollection<Podcast>();
@@ -64,15 +64,35 @@ namespace PodcastApp.ViewModel
                 Podcasts.Add(podcast);
             }
         }
+        public void ReadEpisodes(string rssLink)
+        {
+            Episodes.Clear();
+
+            var episodes = RssHelper.GetEpisodes(rssLink);
+
+            foreach (var episode in episodes)
+            {
+                Episodes.Add(episode);
+            }
+        }
+        public void InstantiateCommands()
+        {
+            //ExitCommand = new BaseCommand(x => true, ExitApplication);
+            //NewPodcastCommand = new BaseCommand(x => true, SubscribePodcast);
+        }
+        public void ExitApplication()
+        {
+            Application.Current.Shutdown();
+        }
         public void SubscribePodcast()
         {
             string rssLink = Prompt.ShowDialog("Podcast RSS Link", "Subscribe to New Podcast");
 
-            if (rssLink == "") 
+            if (rssLink == "")
             {
                 throw new ArgumentException("Invalid RSS feed");
-            } 
-            
+            }
+
             Podcast podcast = new Podcast();
             PodcastRss podcastRss = RssHelper.GetInfo(rssLink);
 
@@ -95,25 +115,6 @@ namespace PodcastApp.ViewModel
             DatabaseHelper.InsertPodcast(podcast);
 
             ReadPodcasts();
-        }
-        public void ReadEpisodes(string rssLink)
-        {
-            Episodes.Clear();
-
-            var episodes = RssHelper.GetEpisodes(rssLink);
-
-            foreach (var episode in episodes)
-            {
-                Episodes.Add(episode);
-            }
-        }
-        public void InstantiateCommands()
-        {
-         //   ExitCommand = new BaseCommand(x => true, ExitApplication);
-        }
-        public void ExitApplication()
-        {
-            Application.Current.Shutdown();
         }
     }
 }

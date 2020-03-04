@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PodcastApp.View"
         xmlns:vm="clr-namespace:PodcastApp.ViewModel"
         mc:Ignorable="d"
-        Title="Poor Yorrick Podcasts" Height="600" Width="750">
+        Title="Poor Yorrick Podcasts" Height="650" Width="750">
     <Window.Resources>
         <vm:MainVM x:Key="vm"/>
     </Window.Resources>
@@ -24,7 +24,12 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="9*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Column="0"
+                            Grid.Row="0">
                     <Label>
                         <TextBlock Text="Podcasts" FontSize="24" FontWeight="Bold"/>
                     </Label>
@@ -66,11 +71,13 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </StackPanel>
-                <StackPanel Grid.Column="1">
+                <StackPanel Grid.Column="1"
+                            Grid.Row="0">
                     <Label>
                         <TextBlock Text="Episodes" FontSize="24" FontWeight="Bold"/>
                     </Label>
                     <ListView ItemsSource="{Binding Episodes}"
+                              SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}"
                               HorizontalAlignment="Left"
                               Height="500"
                               Width="370"
@@ -93,6 +100,25 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Grid.Row="1"
+                            DockPanel.Dock="Bottom"
+                            VerticalAlignment="Bottom"
+                            Background="#e0e0de"
+                            Height="50"
+                            Grid.ColumnSpan="2">
+                    <Image Source="{Binding SelectedPodcast.ThumbnailFileUrl}" Width="60"/>
+                    <Image Width="50"/>
+                    <Image Width="60"/>
+                    <Image Width="50"/>
+                    <TextBlock Text="{Binding SelectedEpisode.Title}"
+                               FontSize="20"
+                               Width="475"
+                               TextAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"/>
+                    <Image Width="50"/>
                 </StackPanel>
             </Grid>
         </DockPanel>
