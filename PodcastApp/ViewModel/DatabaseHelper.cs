@@ -44,8 +44,14 @@ namespace PodcastApp.ViewModel
         }
 
         public static void DeletePodcast(Podcast podcast) 
-        { 
-            //TODO: Implement delete podcast functionality
+        {
+            if (podcast != null)
+            {
+                PodcastAppEntities1 dbContext = new PodcastAppEntities1();
+
+                dbContext.Podcasts.Remove(podcast);
+                dbContext.SaveChanges();
+            }
         }
     }
 }
