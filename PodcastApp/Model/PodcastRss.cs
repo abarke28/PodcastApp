@@ -27,7 +27,7 @@ namespace PodcastApp.Model
             set
             {
                 _pubDate = value;
-                PublishedDate = DateTime.Parse(PubDate, CultureInfo.CurrentCulture, DateTimeStyles.AssumeUniversal);
+                PublishedDate = DateTime.Parse(PubDate, CultureInfo.CurrentCulture);
             }
         }
         public DateTime PublishedDate { get; set; }

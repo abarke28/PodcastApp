@@ -27,7 +27,20 @@ namespace PodcastApp.ViewModel
 
         public static void UpdatePodcast(Podcast podcast)
         {
-            //TODO: Implement retrieve podcast functionality
+            PodcastAppEntities1 dbContext = new PodcastAppEntities1();
+
+            var oldPodcast = dbContext.Podcasts.FirstOrDefault<Podcast>(p => p.Id == podcast.Id);
+
+            if (oldPodcast != null)
+            {
+                oldPodcast.RssLink = podcast.RssLink;
+                oldPodcast.ThumbnailFileLocation = podcast.ThumbnailFileLocation;
+                oldPodcast.ThumbnailFileUrl = podcast.ThumbnailFileUrl;
+                oldPodcast.Title = podcast.Title;
+                oldPodcast.Description = podcast.Description;
+
+                dbContext.SaveChanges();
+            }
         }
 
         public static void DeletePodcast(Podcast podcast) 
