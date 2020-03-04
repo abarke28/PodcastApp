@@ -108,11 +108,20 @@
                             Background="#e0e0de"
                             Height="50"
                             Grid.ColumnSpan="2">
-                    <Image Source="{Binding SelectedPodcast.ThumbnailFileUrl}" Width="60"/>
-                    <Image Width="50"/>
-                    <Image Width="60"/>
-                    <Image Width="50"/>
+                    <Image Source="{Binding SelectedPodcast.ThumbnailFileUrl}" 
+                           Width="50"
+                           Stretch="Fill"/>
+                    <Button BorderThickness="0">
+                        <Image Width="50"/>
+                    </Button>
+                    <Button BorderThickness="0">
+                        <Image Width="60"/>
+                    </Button>
+                    <Button BorderThickness="0">
+                        <Image Width="50"/>
+                    </Button>
                     <TextBlock Text="{Binding SelectedEpisode.Title}"
+                               Padding="7"
                                FontSize="20"
                                Width="475"
                                TextAlignment="Left"
