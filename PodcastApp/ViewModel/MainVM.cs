@@ -43,13 +43,14 @@ namespace PodcastApp.ViewModel
             Podcasts = new ObservableCollection<Podcast>();
             Episodes = new ObservableCollection<Item>();
 
+            InstantiateCommands();
             ReadPodcasts();
 
             //Some rss' for now
             //https://rss.art19.com/monday-morning-podcast
             //http://wakingup.libsyn.com/rss
             //https://audioboom.com/channels/4940872.rss
-            //git
+
             //SubscribePodcast();
         }
         public void ReadPodcasts()
@@ -67,8 +68,11 @@ namespace PodcastApp.ViewModel
         {
             string rssLink = Prompt.ShowDialog("Podcast RSS Link", "Subscribe to New Podcast");
 
-            //TODO: Error handling
-
+            if (rssLink == "") 
+            {
+                throw new ArgumentException("Invalid RSS feed");
+            } 
+            
             Podcast podcast = new Podcast();
             PodcastRss podcastRss = RssHelper.GetInfo(rssLink);
 
@@ -103,12 +107,11 @@ namespace PodcastApp.ViewModel
                 Episodes.Add(episode);
             }
         }
-        public void InstantiateCommand()
+        public void InstantiateCommands()
         {
-            ExitCommand = new BaseCommand(x => true, ExitApplication);
+         //   ExitCommand = new BaseCommand(x => true, ExitApplication);
         }
-
-        public void ExitApplication(object x)
+        public void ExitApplication()
         {
             Application.Current.Shutdown();
         }
