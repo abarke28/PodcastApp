@@ -112,13 +112,19 @@
                            Width="50"
                            Stretch="Fill"/>
                     <Button BorderThickness="0">
-                        <Image Width="50"/>
+                        <Image Width="40"
+                               Height="30"
+                               Source="{Binding Player.ReplayImageSource}"/>
                     </Button>
                     <Button BorderThickness="0">
-                        <Image Width="60"/>
+                        <Image Width="40"
+                               Height="35"
+                               Source="{Binding Player.PlayPauseImageSource}"/>
                     </Button>
                     <Button BorderThickness="0">
-                        <Image Width="50"/>
+                        <Image Width="40"
+                               Height="30"
+                               Source="{Binding Player.ForwardImageSource}"/>
                     </Button>
                     <TextBlock Text="{Binding SelectedEpisode.Title}"
                                Padding="7"

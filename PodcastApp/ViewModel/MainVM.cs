@@ -10,6 +10,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace PodcastApp.ViewModel
 {
@@ -17,6 +18,7 @@ namespace PodcastApp.ViewModel
     {
         public ObservableCollection<Podcast> Podcasts { get; set; }
         public ObservableCollection<Item> Episodes { get; set; }
+        public Player Player { get; set; }
 
         private Podcast _selectedPodcast;
         public Podcast SelectedPodcast
@@ -35,13 +37,15 @@ namespace PodcastApp.ViewModel
             get { return _selectedEpisode; }
             set { _selectedEpisode = value; }
         }
-        public BaseCommand ExitCommand { get; set; }
-        public BaseCommand NewPodcastCommand { get; set; }
+
+        public ICommand ExitCommand { get; set; }
+        public ICommand NewPodcastCommand { get; set; }
 
         public MainVM()
         {
             Podcasts = new ObservableCollection<Podcast>();
             Episodes = new ObservableCollection<Item>();
+            Player = new Player();
 
             InstantiateCommands();
             ReadPodcasts();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,6 @@ namespace PodcastApp.Model
 {
     public class Player : INotifyPropertyChanged
     {
-
         private bool _isPlaying;
         public bool IsPlaying
         {
@@ -70,6 +70,18 @@ namespace PodcastApp.Model
             }
         }
 
+        private string _audioStateImageSource;
+        public string AudioStateImageSource
+        {
+            get { return _audioStateImageSource; }
+            set
+            {
+                if (_audioStateImageSource == value) return;
+                _audioStateImageSource = value;
+                OnPropertyChanged("AudioStateImageSource");
+            }
+        }
+
         private string _audioSource;
         public string AudioSource
         {
@@ -80,6 +92,27 @@ namespace PodcastApp.Model
                 _audioSource = value;
                 OnPropertyChanged("AudioSource");
             }
+        }
+
+        private Item _playingEpisode;
+        public Item PlayingEpisode
+        {
+            get { return _playingEpisode; }
+            set
+            {
+                if (_playingEpisode == value) return;
+                _playingEpisode = value;
+                OnPropertyChanged("PlayingEpisode");
+            }
+        }
+
+        public Player()
+        {
+            IsPlaying = false;
+            PlayPauseImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Play.png";
+            ReplayImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Replay10.png";
+            ForwardImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Forward10.png";
+            AudioStateImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Sound.png";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
