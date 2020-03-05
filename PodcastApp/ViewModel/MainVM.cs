@@ -49,13 +49,6 @@ namespace PodcastApp.ViewModel
 
             InstantiateCommands();
             ReadPodcasts();
-
-            //Some rss' for now
-            //https://rss.art19.com/monday-morning-podcast
-            //http://wakingup.libsyn.com/rss
-            //https://audioboom.com/channels/4940872.rss
-
-            //SubscribePodcast();
         }
         public void ReadPodcasts()
         {
@@ -81,8 +74,8 @@ namespace PodcastApp.ViewModel
         }
         public void InstantiateCommands()
         {
-            //ExitCommand = new BaseCommand(x => true, ExitApplication);
-            //NewPodcastCommand = new BaseCommand(x => true, SubscribePodcast);
+            ExitCommand = new BaseCommand(x => true, x => ExitApplication());
+            NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
         }
         public void ExitApplication()
         {

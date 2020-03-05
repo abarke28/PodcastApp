@@ -14,9 +14,11 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="File">
-                    <MenuItem Header="Add New Podcast (RSS)"/>
+                    <MenuItem Header="Add New Podcast (RSS)"
+                              Command="{Binding NewPodcastCommand}"/>
                     <Separator/>
-                    <MenuItem Header="Exit"/>
+                    <MenuItem Header="Exit"
+                              Command="{Binding ExitCommand}"/>
                 </MenuItem>
             </Menu>
             <Grid>
@@ -106,7 +108,8 @@
                                             DockPanel.Dock="Right">
                                         <Image Source="c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Play.png"
                                                Height="15"
-                                               HorizontalAlignment="Right"/>
+                                               Width="30"
+                                               HorizontalAlignment="Center"/>
                                     </Button>
                                 </DockPanel>
                             </DataTemplate>
