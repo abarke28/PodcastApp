@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Media;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -113,6 +115,17 @@ namespace PodcastApp.Model
             ReplayImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Replay10.png";
             ForwardImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Forward10.png";
             AudioStateImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Sound.png";
+
+        }
+
+        public void PlayAudio()
+        {
+            IsPlaying = true;
+            PlayPauseImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Pause.png";
+
+            //SoundPlayer soundPlayer = new SoundPlayer(PlayingEpisode.Link);
+            //HttpClient httpClient = new HttpClient();
+            //soundPlayer.Play();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -40,6 +40,7 @@ namespace PodcastApp.ViewModel
 
         public ICommand ExitCommand { get; set; }
         public ICommand NewPodcastCommand { get; set; }
+        public ICommand PlayEpisodeCommand { get; set; }
 
         public MainVM()
         {
@@ -76,6 +77,7 @@ namespace PodcastApp.ViewModel
         {
             ExitCommand = new BaseCommand(x => true, x => ExitApplication());
             NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
+            PlayEpisodeCommand = new BaseCommand(SelectedEpisode => SelectedEpisode != null, SelectedEpisode => PlayEpisode(SelectedEpisode as Item));
         }
         public void ExitApplication()
         {
@@ -112,6 +114,11 @@ namespace PodcastApp.ViewModel
             DatabaseHelper.InsertPodcast(podcast);
 
             ReadPodcasts();
+        }
+        public void PlayEpisode(Item item)
+        {
+            Player.PlayingEpisode = item;
+            Player.PlayAudio();
         }
     }
 }
