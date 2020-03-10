@@ -4,6 +4,7 @@ using PodcastApp.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -14,19 +15,53 @@ using System.Windows.Input;
 
 namespace PodcastApp.ViewModel
 {
-    public class MainVM
+    public class MainVM : INotifyPropertyChanged
     {
-        public ObservableCollection<Podcast> Podcasts { get; set; }
-        public ObservableCollection<Item> Episodes { get; set; }
-        public Player Player { get; set; }
+        private ObservableCollection<Podcast> _podcasts;
+        public ObservableCollection<Podcast> Podcasts
+        {
+            get { return _podcasts; }
+            set
+            {
+                if (_podcasts == value) return;
+                _podcasts = value;
+                OnPropertyChanged("Podcasts");
+            }
+        }
+
+        private ObservableCollection<Item> _episodes;
+        public ObservableCollection<Item> Episodes
+        {
+            get { return _episodes; }
+            set
+            {
+                if (_episodes == value) return;
+                _episodes = value;
+                OnPropertyChanged("Episodes");
+            }
+        }
+
+        private Player _player;
+        public Player Player
+        {
+            get { return _player; }
+            set
+            {
+                if (_player == value) return;
+                _player = value;
+                OnPropertyChanged("Player");
+            }
+        }
 
         private Podcast _selectedPodcast;
         public Podcast SelectedPodcast
         {
             get { return _selectedPodcast; }
             set 
-            { 
+            {
+                if (_selectedPodcast == value) return;
                 _selectedPodcast = value;
+                OnPropertyChanged("SelectedPodcast");
                 ReadEpisodes(SelectedPodcast.RssLink);
             }
         }
@@ -35,7 +70,12 @@ namespace PodcastApp.ViewModel
         public Item SelectedEpisode
         {
             get { return _selectedEpisode; }
-            set { _selectedEpisode = value; }
+            set
+            {
+                if (_selectedEpisode == value) return;
+                _selectedEpisode = value;
+                OnPropertyChanged("SelectedEpisode");
+            }
         }
 
         public ICommand ExitCommand { get; set; }
@@ -120,5 +160,12 @@ namespace PodcastApp.ViewModel
             Player.PlayingEpisode = item;
             Player.PlayAudio();
         }
+
+        private void OnPropertyChanged(string property)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
     }
 }
