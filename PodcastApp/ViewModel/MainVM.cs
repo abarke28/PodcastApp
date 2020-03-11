@@ -77,7 +77,6 @@ namespace PodcastApp.ViewModel
                 OnPropertyChanged("SelectedEpisode");
             }
         }
-
         public ICommand ExitCommand { get; set; }
         public ICommand NewPodcastCommand { get; set; }
         public ICommand PlayEpisodeCommand { get; set; }
