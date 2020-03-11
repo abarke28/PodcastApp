@@ -88,9 +88,8 @@
                               BorderBrush="White">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <DockPanel>
-                                    <StackPanel Grid.Row="0"
-                                                Orientation="Vertical"
+                                <DockPanel Width="370">
+                                    <StackPanel Orientation="Vertical"
                                                 DockPanel.Dock="Left">
                                         <Label>
                                             <TextBlock Text="{Binding Title}"
@@ -102,10 +101,10 @@
                                            Foreground="#5890cc"/>
                                         </Label>
                                     </StackPanel>
-                                    <Button Grid.Column="1"
-                                            BorderThickness="0"
+                                    <Button BorderThickness="0"
                                             Background="Transparent"
-                                            DockPanel.Dock="Right">
+                                            DockPanel.Dock="Right"
+                                            Width="30">
                                         <Image Source="c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Play.png"
                                                Height="15"
                                                Width="30"
