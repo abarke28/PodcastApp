@@ -37,9 +37,8 @@
                     </Label>
                     <ListView ItemsSource="{Binding Podcasts}"
                               SelectedItem="{Binding SelectedPodcast, Mode=TwoWay}"
-                              HorizontalAlignment="Left"
+                              HorizontalAlignment="Stretch"
                               Height="500"
-                              Width="370"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                               BorderBrush="White">
@@ -80,37 +79,46 @@
                     </Label>
                     <ListView ItemsSource="{Binding Episodes}"
                               SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}"
-                              HorizontalAlignment="Left"
+                              HorizontalAlignment="Stretch"
+                              HorizontalContentAlignment="Stretch"
                               Height="500"
-                              Width="370"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Visible"
                               BorderBrush="White">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <DockPanel Width="370">
-                                    <StackPanel Orientation="Vertical"
-                                                DockPanel.Dock="Left">
-                                        <Label>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" 
+                                               HorizontalAlignment="Left">
                                             <TextBlock Text="{Binding Title}"
-                                           TextWrapping="WrapWithOverflow"
-                                           FontWeight="DemiBold"/>
+                                                       TextWrapping="WrapWithOverflow"
+                                                       FontWeight="DemiBold"/>
                                         </Label>
-                                        <Label>
+                                        <Label Grid.Row="1" 
+                                               HorizontalAlignment="Left">
                                             <TextBlock Text="{Binding PubDate}"
-                                           Foreground="#5890cc"/>
+                                                       Foreground="#5890cc"/>
                                         </Label>
-                                    </StackPanel>
-                                    <Button BorderThickness="0"
-                                            Background="Transparent"
-                                            DockPanel.Dock="Right"
-                                            Width="30">
+                                    </Grid>
+                                    <Button Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Right"
+                                            BorderThickness="0"
+                                            Background="Transparent">
                                         <Image Source="c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Play.png"
                                                Height="15"
-                                               Width="30"
                                                HorizontalAlignment="Center"/>
                                     </Button>
-                                </DockPanel>
+                                </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
