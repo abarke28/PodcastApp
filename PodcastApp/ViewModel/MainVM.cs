@@ -116,7 +116,7 @@ namespace PodcastApp.ViewModel
         {
             ExitCommand = new BaseCommand(x => true, x => ExitApplication());
             NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
-            PlayEpisodeCommand = new BaseCommand(SelectedEpisode => SelectedEpisode != null, SelectedEpisode => PlayEpisode(SelectedEpisode as Item));
+            PlayEpisodeCommand = new BaseCommand(e => CanPlayEpisode(e as Item), SelectedEpisode => PlayEpisode());
         }
         public void ExitApplication()
         {
@@ -154,12 +154,15 @@ namespace PodcastApp.ViewModel
 
             ReadPodcasts();
         }
-        public void PlayEpisode(Item item)
+        public void PlayEpisode()
         {
-            Player.PlayingEpisode = item;
+            Player.PlayingEpisode = SelectedEpisode;
             Player.PlayAudio();
         }
-
+        public bool CanPlayEpisode(Item episode)
+        {
+            return (episode.Title == SelectedEpisode.Title);
+        }
         private void OnPropertyChanged(string property)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));

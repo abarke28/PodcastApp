@@ -26,7 +26,7 @@ namespace PodcastApp.Model
             get { return _pubDate; }
             set
             {
-                _pubDate = value;
+                _pubDate = DateTime.Parse(value, CultureInfo.CurrentCulture).ToString();
                 PublishedDate = DateTime.Parse(PubDate, CultureInfo.CurrentCulture);
             }
         }
