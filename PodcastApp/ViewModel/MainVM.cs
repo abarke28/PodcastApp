@@ -157,6 +157,7 @@ namespace PodcastApp.ViewModel
         public void PlayEpisode()
         {
             Player.PlayingEpisode = SelectedEpisode;
+            Console.WriteLine("Entered Play Episode");
             Player.PlayAudio();
         }
         public bool CanPlayEpisode(Item episode)
