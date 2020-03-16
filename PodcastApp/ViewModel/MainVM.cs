@@ -116,7 +116,7 @@ namespace PodcastApp.ViewModel
         {
             ExitCommand = new BaseCommand(x => true, x => ExitApplication());
             NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
-            PlayEpisodeCommand = new BaseCommand(e => CanPlayEpisode(e as Item), SelectedEpisode => PlayEpisode());
+            PlayEpisodeCommand = new BaseCommand(e => CanPlayEpisode(e as Item), e => PlayEpisode(e as Item));
         }
         public void ExitApplication()
         {
@@ -154,9 +154,9 @@ namespace PodcastApp.ViewModel
 
             ReadPodcasts();
         }
-        public void PlayEpisode()
+        public void PlayEpisode(Item episode)
         {
-            Player.PlayingEpisode = SelectedEpisode;
+            Player.PlayingEpisode = episode;
             Console.WriteLine("Entered Play Episode");
             Player.PlayAudio();
         }
