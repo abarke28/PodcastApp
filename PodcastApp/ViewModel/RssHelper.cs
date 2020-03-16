@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -47,6 +48,26 @@ namespace PodcastApp.ViewModel
                     podcast = (PodcastRss)xmlSerializer.Deserialize(reader);
                 }
             }
+
+            return podcast;
+        }
+
+        public static async Task<PodcastRss> GetInfoAsync(string rsslink)
+        {
+            PodcastRss podcast = new PodcastRss();
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(PodcastRss));
+
+            using (HttpClient httpClient = new HttpClient())
+            {
+                string xml = await Encoding.Default.GetString(httpClient.GetAsync(rsslink));
+
+                using (Stream reader = new MemoryStream(Encoding.Default.GetBytes(xml)))
+                {
+                    podcast = (PodcastRss)xmlSerializer.Deserialize(reader);
+                }
+            }
+
             return podcast;
         }
     }
