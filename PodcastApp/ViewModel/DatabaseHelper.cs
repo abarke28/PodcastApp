@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PodcastApp.ViewModel
 {
-    public class DatabaseHelper
+    public static class DatabaseHelper
     {
         public static void InsertPodcast(Podcast podcast)
         {

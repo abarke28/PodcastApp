@@ -114,6 +114,18 @@ namespace PodcastApp.ViewModel
                 Episodes.Add(episode);
             }
         }
+
+        public async void ReadEpisodesAsync(string rssLink)
+        {
+            Episodes.Clear();
+
+            var episodes = await RssHelper.GetEpisodesAsync(rssLink).ConfigureAwait(true);
+
+            foreach(var episode in episodes)
+            {
+                Episodes.Add(episode);
+            }
+        }
         public void InstantiateCommands()
         {
             ExitCommand = new BaseCommand(x => true, x => ExitApplication());
