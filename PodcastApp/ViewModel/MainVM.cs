@@ -62,7 +62,7 @@ namespace PodcastApp.ViewModel
                 if (_selectedPodcast == value) return;
                 _selectedPodcast = value;
                 OnPropertyChanged("SelectedPodcast");
-                ReadEpisodes(SelectedPodcast.RssLink);
+                ReadEpisodesAsync(SelectedPodcast.RssLink);
             }
         }
 
@@ -114,7 +114,6 @@ namespace PodcastApp.ViewModel
                 Episodes.Add(episode);
             }
         }
-
         public async void ReadEpisodesAsync(string rssLink)
         {
             Episodes.Clear();

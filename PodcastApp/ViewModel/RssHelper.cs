@@ -41,18 +41,23 @@ namespace PodcastApp.ViewModel
 
             using (HttpClient client = new HttpClient())
             {
-                Stream xml = await client.GetStreamAsync(new Uri(rssLink)).ConfigureAwait(false);
+                string xml = await client.GetStringAsync(new Uri(rssLink)).ConfigureAwait(true);
 
-                XmlReader xmlReader = XmlReader.Create(xml);
+                XmlReader xmlReader = XmlReader.Create(new StringReader(xml));
+
+                //xmlReader.
+
+                xmlReader.Read();
 
                 PodcastRss podcast = (PodcastRss)xmlSerializer.Deserialize(xmlReader);
+
+                posts = podcast.Channel.Items;
 
                 xmlReader.Dispose();
             }
 
             return posts;
         }
-
         public static PodcastRss GetInfo(string rsslink)
         {
             PodcastRss podcast = new PodcastRss();
