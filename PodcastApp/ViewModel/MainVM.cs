@@ -87,8 +87,6 @@ namespace PodcastApp.ViewModel
             Episodes = new ObservableCollection<Item>();
             Player = new Player();
 
-            //PodcastRss p =  RssHelper.GetInfoAsync("http://wakingup.libsyn.com/rss");
-
             InstantiateCommands();
             ReadPodcasts();
         }
@@ -96,7 +94,7 @@ namespace PodcastApp.ViewModel
         {
             Podcasts.Clear();
             
-            var podcasts = DatabaseHelper.GetPodcasts();
+            var podcasts = DatabaseHelper.GetPodcasts().OrderBy(p => p.Title);
 
             foreach(Podcast podcast in podcasts)
             {
@@ -117,10 +115,12 @@ namespace PodcastApp.ViewModel
         public async void ReadEpisodesAsync(string rssLink)
         {
             Episodes.Clear();
-
+            
             var episodes = await RssHelper.GetEpisodesAsync(rssLink).ConfigureAwait(true);
 
-            foreach(var episode in episodes)
+            Episodes.Clear();
+
+            foreach (var episode in episodes)
             {
                 Episodes.Add(episode);
             }

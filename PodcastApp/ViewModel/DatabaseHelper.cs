@@ -16,6 +16,7 @@ namespace PodcastApp.ViewModel
             dbContext.Podcasts.Add(podcast);
             Console.WriteLine("{0} inserted into DB", podcast.Title);
             dbContext.SaveChanges();
+            dbContext.Dispose();
         }
 
         public static List<Podcast> GetPodcasts()
