@@ -7,11 +7,12 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace PodcastApp.ViewModel
 {
-    public class RssHelper
+    public static class RssHelper
     {
         public static List<Item> GetEpisodes(string rssLink)
         {
@@ -30,6 +31,25 @@ namespace PodcastApp.ViewModel
                     posts = podcast.Channel.Items;
                 }
             }
+            return posts;
+        }
+        public static async Task<List<Item>> GetEpisodesAsync(string rssLink)
+        {
+            List<Item> posts = new List<Item>();
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(PodcastRss));
+
+            using (HttpClient client = new HttpClient())
+            {
+                Stream xml = await client.GetStreamAsync(new Uri(rssLink)).ConfigureAwait(false);
+
+                XmlReader xmlReader = XmlReader.Create(xml);
+
+                PodcastRss podcast = (PodcastRss)xmlSerializer.Deserialize(xmlReader);
+
+                xmlReader.Dispose();
+            }
+
             return posts;
         }
 
@@ -51,7 +71,6 @@ namespace PodcastApp.ViewModel
 
             return podcast;
         }
-
         public static async Task<PodcastRss> GetInfoAsync(string rsslink)
         {
             PodcastRss podcast = new PodcastRss();
@@ -60,7 +79,7 @@ namespace PodcastApp.ViewModel
 
             using (HttpClient httpClient = new HttpClient())
             {
-                string xml = await Encoding.Default.GetString(httpClient.GetAsync(rsslink));
+                string xml = await httpClient.GetStringAsync(new Uri(rsslink)).ConfigureAwait(false);
 
                 using (Stream reader = new MemoryStream(Encoding.Default.GetBytes(xml)))
                 {

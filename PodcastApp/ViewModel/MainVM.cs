@@ -87,6 +87,8 @@ namespace PodcastApp.ViewModel
             Episodes = new ObservableCollection<Item>();
             Player = new Player();
 
+            //PodcastRss p =  RssHelper.GetInfoAsync("http://wakingup.libsyn.com/rss");
+
             InstantiateCommands();
             ReadPodcasts();
         }
@@ -118,7 +120,7 @@ namespace PodcastApp.ViewModel
             NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
             PlayEpisodeCommand = new BaseCommand(e => CanPlayEpisode(e as Item), e => PlayEpisode(e as Item));
         }
-        public void ExitApplication()
+        public static void ExitApplication()
         {
             Application.Current.Shutdown();
         }
@@ -169,6 +171,5 @@ namespace PodcastApp.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
         public event PropertyChangedEventHandler PropertyChanged;
-
     }
 }
