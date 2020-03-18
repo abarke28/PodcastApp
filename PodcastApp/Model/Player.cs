@@ -7,6 +7,7 @@ using System.Media;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace PodcastApp.Model
 {
@@ -120,12 +121,15 @@ namespace PodcastApp.Model
 
         public void PlayAudio()
         {
+            AudioSource = PlayingEpisode.Link;
             IsPlaying = true;
             PlayPauseImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Pause.png";
 
-            //SoundPlayer soundPlayer = new SoundPlayer(PlayingEpisode.Link);
-            //HttpClient httpClient = new HttpClient();
-            //soundPlayer.Play();
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer.Open(new Uri(AudioSource));
+            mediaPlayer.Position = TimeSpan.Zero;
+            mediaPlayer.Play();
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

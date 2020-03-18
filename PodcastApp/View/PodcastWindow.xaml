@@ -112,6 +112,9 @@
                                     <Button Grid.Column="1"
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Right"
+                                            DataContext="{Binding Source={StaticResource vm}}"
+                                            Command="{Binding PlayEpisodeCommand}"
+                                            CommandParameter="{Binding SelectedEpisode, Mode=TwoWay}"
                                             BorderThickness="0"
                                             Background="Transparent">
                                         <Image Source="c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Play.png"

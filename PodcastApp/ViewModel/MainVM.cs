@@ -114,6 +114,8 @@ namespace PodcastApp.ViewModel
         }
         public async void ReadEpisodesAsync(string rssLink)
         {
+            //Fetch episodes asynchrously 
+
             Episodes.Clear();
             
             var episodes = await RssHelper.GetEpisodesAsync(rssLink).ConfigureAwait(true);
@@ -139,7 +141,7 @@ namespace PodcastApp.ViewModel
         {
             string rssLink = Prompt.ShowDialog("Podcast RSS Link", "Subscribe to New Podcast");
 
-            if (rssLink == "")
+            if (String.IsNullOrEmpty(rssLink))
             {
                 throw new ArgumentException("Invalid RSS feed");
             }
@@ -175,7 +177,10 @@ namespace PodcastApp.ViewModel
         }
         public bool CanPlayEpisode(Item episode)
         {
-            return (episode.Title == SelectedEpisode.Title);
+            return true;
+            //return (episode == null ? false : episode.Title == SelectedEpisode.Title);
+
+            //return (episode.Title == SelectedEpisode.Title);
         }
         private void OnPropertyChanged(string property)
         {
