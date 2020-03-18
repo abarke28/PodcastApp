@@ -125,6 +125,8 @@ namespace PodcastApp.Model
             IsPlaying = true;
             PlayPauseImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Pause.png";
 
+            AudioSource = @"https://dts.podtrac.com/redirect.mp3/media.blubrry.com/99percentinvisible/dovetail.prxu.org/96/0a4c4316-2d21-4e3b-82ba-d35f8b74aa3f/393_Map_Quest_pt01.mp3";
+
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer.Open(new Uri(AudioSource));
             mediaPlayer.Position = TimeSpan.Zero;
