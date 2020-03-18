@@ -1,9 +1,11 @@
-﻿using System;
+﻿using PodcastApp.View.AppResources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -112,10 +114,10 @@ namespace PodcastApp.Model
         public Player()
         {
             IsPlaying = false;
-            PlayPauseImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Play.png";
-            ReplayImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Replay10.png";
-            ForwardImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Forward10.png";
-            AudioStateImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Sound.png";
+            PlayPauseImageSource = AppResources.PLAY_IMAGE;
+            ReplayImageSource = AppResources.REWIND_10_IMAGE;
+            ForwardImageSource = AppResources.FORWARD_10_IMAGE;
+            AudioStateImageSource = AppResources.PLAYING_SOUND_IMAGE;
 
         }
 
@@ -123,12 +125,17 @@ namespace PodcastApp.Model
         {
             AudioSource = PlayingEpisode.Link;
             IsPlaying = true;
-            PlayPauseImageSource = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Pause.png";
+            PlayPauseImageSource = AppResources.PAUSE_IMAGE;
 
             AudioSource = @"https://dts.podtrac.com/redirect.mp3/media.blubrry.com/99percentinvisible/dovetail.prxu.org/96/0a4c4316-2d21-4e3b-82ba-d35f8b74aa3f/393_Map_Quest_pt01.mp3";
 
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.DownloadFile(AudioSource, @"c:\Users\owner\desktop\testing.mp3");
+            }
+
             MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.Open(new Uri(AudioSource));
+            mediaPlayer.Open(new Uri(@"c:\Users\Owner\desktop\testing.mp3"));
             mediaPlayer.Position = TimeSpan.Zero;
             mediaPlayer.Play();
             
