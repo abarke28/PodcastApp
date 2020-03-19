@@ -132,7 +132,7 @@
                             Background="#e0e0de"
                             Height="50"
                             Grid.ColumnSpan="2">
-                    <Image Source="{Binding }" 
+                    <Image Source="{Binding Player.ThumbnailSource}" 
                            Width="50"
                            Stretch="Fill"/>
                     <Button BorderThickness="0">

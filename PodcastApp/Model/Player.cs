@@ -34,7 +34,12 @@ namespace PodcastApp.Model
         public string ThumbnailSource
         {
             get { return _thumbnailSource; }
-            set { _thumbnailSource = value; }
+            set 
+            {
+                if (_thumbnailSource == value) return;
+                _thumbnailSource = value;
+                OnPropertyChanged("ThumbnailSource");
+            }
         }
 
         private string _playPauseImageSource;

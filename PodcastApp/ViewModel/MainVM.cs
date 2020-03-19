@@ -62,6 +62,7 @@ namespace PodcastApp.ViewModel
                 if (_selectedPodcast == value) return;
                 _selectedPodcast = value;
                 OnPropertyChanged("SelectedPodcast");
+                Episodes.Clear();
                 ReadEpisodesAsync(SelectedPodcast.RssLink);
             }
         }
@@ -116,8 +117,6 @@ namespace PodcastApp.ViewModel
         {
             //Fetch episodes asynchrously 
 
-            //Episodes.Clear();
-            
             var episodes = await RssHelper.GetEpisodesAsync(rssLink).ConfigureAwait(true);
 
             Episodes.Clear();
@@ -172,6 +171,7 @@ namespace PodcastApp.ViewModel
         public void PlayEpisode(Item episode)
         {
             Player.PlayingEpisode = episode;
+            Player.ThumbnailSource = SelectedPodcast.ThumbnailFileLocation;
             System.Diagnostics.Debug.WriteLine("Entered Play Episode");
             Player.PlayAudio();
         }
