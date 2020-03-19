@@ -171,7 +171,6 @@ namespace PodcastApp.Model
             using (WebClient webClient = new WebClient())
             {
                 await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\testing.mp3");
-                //webClient.DownloadFile(AudioSource, @"c:\Users\owner\desktop\testing.mp3");
             }
 
             if (_player == null) _player = new MediaPlayer();
@@ -219,6 +218,7 @@ namespace PodcastApp.Model
         public void RewindAudio()
         {
             //Sudden rewind is audibly jarring. Pause for a moment
+
             if (_player.Position < TimeSpan.FromSeconds(10))
             {
                 _player.Pause();
