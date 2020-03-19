@@ -134,6 +134,8 @@ namespace PodcastApp.ViewModel
             NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
             PlayEpisodeCommand = new BaseCommand(e => true, e => PlayEpisode(e as Item));
             PauseResumeEpisodeCommand = new BaseCommand(b => true, x => PauseResumeEpisode());
+            RewindEpisodeCommand = new BaseCommand(b => true, x => RewindEpisode());
+            ForwardEpisodeCommand = new BaseCommand(b => true, x => FastForwardEpisode());
         }
         public void ExitApplication()
         {

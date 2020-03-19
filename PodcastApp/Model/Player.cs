@@ -160,21 +160,26 @@ namespace PodcastApp.Model
             AudioStateImageSource = AppResources.PLAYING_SOUND_IMAGE;
         }
 
-        public void PlayAudio()
+        public async void PlayAudio()
         {
             AudioSource = PlayingEpisode.Link;
+
+            System.Diagnostics.Debug.WriteLine("Retrieved Audio URI " + AudioSource.ToString());
 
             AudioSource = @"https://dts.podtrac.com/redirect.mp3/media.blubrry.com/99percentinvisible/dovetail.prxu.org/96/0a4c4316-2d21-4e3b-82ba-d35f8b74aa3f/393_Map_Quest_pt01.mp3";
 
             using (WebClient webClient = new WebClient())
             {
-                webClient.DownloadFile(AudioSource, @"c:\Users\owner\desktop\testing.mp3");
+                await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\testing.mp3");
+                //webClient.DownloadFile(AudioSource, @"c:\Users\owner\desktop\testing.mp3");
             }
 
             if (_player == null) _player = new MediaPlayer();
 
             _player.Open(new Uri(@"c:\Users\Owner\desktop\testing.mp3"));
             MediaIsLoaded = true;
+
+            System.Diagnostics.Debug.WriteLine("MediaIsLoaded = {0}", MediaIsLoaded);
 
             _player.Position = TimeSpan.Zero;
 
@@ -195,24 +200,40 @@ namespace PodcastApp.Model
         }
         public void FastForwardAudio()
         {
+            //Sudden skip is audibly jarring. Pause for a moment
+            _player.Pause();
+            System.Threading.Thread.Sleep(350);
+
             if (_player.Position > _player.NaturalDuration - TimeSpan.FromSeconds(10))
             {
                 _player.Stop();
                 _player.Close();
                 IsPlaying = false;
                 MediaIsLoaded = false;
+                ThumbnailSource = AppResources.BLANK_IMAGE;
             }
-
+           
             _player.Position += TimeSpan.FromSeconds(10);
+            _player.Play();
         }
         public void RewindAudio()
         {
+            //Sudden rewind is audibly jarring. Pause for a moment
             if (_player.Position < TimeSpan.FromSeconds(10))
             {
+                _player.Pause();
+                System.Threading.Thread.Sleep(350);
                 _player.Position = TimeSpan.Zero;
+                _player.Play();
             }
 
-            _player.Position -= TimeSpan.FromSeconds(10);
+            else
+            {
+                _player.Pause();
+                System.Threading.Thread.Sleep(500);
+                _player.Position -= TimeSpan.FromSeconds(10);
+                _player.Play();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

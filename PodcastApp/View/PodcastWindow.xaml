@@ -135,19 +135,23 @@
                     <Image Source="{Binding Player.ThumbnailSource}" 
                            Width="50"
                            Stretch="Fill"/>
-                    <Button BorderThickness="0">
+                    <Button BorderThickness="0"
+                            Command="{Binding RewindEpisodeCommand}"
+                            CommandParameter="{Binding Player.MediaIsLoaded}">
                         <Image Width="40"
                                Height="28"
                                Source="{Binding Player.ReplayImageSource}"/>
                     </Button>
                     <Button BorderThickness="0"
                             Command="{Binding PauseResumeEpisodeCommand}"
-                            CommandParameter="{Binding Player.MediaIsLoaded}">
+                            CommandParameter="{Binding Player.MediaIsLoaded, Mode=OneWay}">
                         <Image Width="40"
                                Height="35"
                                Source="{Binding Player.PlayPauseImageSource}"/>
                     </Button>
-                    <Button BorderThickness="0">
+                    <Button BorderThickness="0"
+                            Command="{Binding ForwardEpisodeCommand}"
+                            CommandParameter="{Binding Player.MediaIsLoaded}">
                         <Image Width="40"
                                Height="28"
                                Source="{Binding Player.ForwardImageSource}"/>
