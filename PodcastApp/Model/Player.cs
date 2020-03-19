@@ -153,6 +153,8 @@ namespace PodcastApp.Model
         {
             IsPlaying = false;
             MediaIsLoaded = false;
+            ThumbnailSource = AppResources.BLANK_IMAGE;
+            PlayPauseImageSource = AppResources.PLAY_IMAGE;
             ReplayImageSource = AppResources.REWIND_10_IMAGE;
             ForwardImageSource = AppResources.FORWARD_10_IMAGE;
             AudioStateImageSource = AppResources.PLAYING_SOUND_IMAGE;
@@ -169,10 +171,7 @@ namespace PodcastApp.Model
                 webClient.DownloadFile(AudioSource, @"c:\Users\owner\desktop\testing.mp3");
             }
 
-            if (_player == null)
-            {
-                _player = new MediaPlayer();
-            }
+            if (_player == null) _player = new MediaPlayer();
 
             _player.Open(new Uri(@"c:\Users\Owner\desktop\testing.mp3"));
             MediaIsLoaded = true;

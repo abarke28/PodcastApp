@@ -14,5 +14,8 @@ namespace PodcastApp.View.AppResources
         public const string FORWARD_10_IMAGE = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Forward10.png";
         public const string PLAYING_SOUND_IMAGE = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Sound.png";
         public const string MUTED_IMAGE = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Mute.png";
+        public const string RACKET_IMAGE = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Racket.png";
+        public const string PODCAST_DEFAULT_IMAGE = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Podcast.png";
+        public const string BLANK_IMAGE = @"c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Blank.png";
     }
 }
