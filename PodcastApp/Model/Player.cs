@@ -9,12 +9,15 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace PodcastApp.Model
 {
     public class Player : INotifyPropertyChanged
     {
+        private MediaPlayer _player;
+
         private bool _isPlaying;
         public bool IsPlaying
         {
@@ -25,6 +28,13 @@ namespace PodcastApp.Model
                 _isPlaying = value;
                 OnPropertyChanged("IsPlaying");
             }
+        }
+
+        private string _thumbnailSource;
+        public string ThumbnailSource
+        {
+            get { return _thumbnailSource; }
+            set { _thumbnailSource = value; }
         }
 
         private string _playPauseImageSource;
@@ -118,7 +128,6 @@ namespace PodcastApp.Model
             ReplayImageSource = AppResources.REWIND_10_IMAGE;
             ForwardImageSource = AppResources.FORWARD_10_IMAGE;
             AudioStateImageSource = AppResources.PLAYING_SOUND_IMAGE;
-
         }
 
         public void PlayAudio()
@@ -134,11 +143,13 @@ namespace PodcastApp.Model
                 webClient.DownloadFile(AudioSource, @"c:\Users\owner\desktop\testing.mp3");
             }
 
-            MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.Open(new Uri(@"c:\Users\Owner\desktop\testing.mp3"));
-            mediaPlayer.Position = TimeSpan.Zero;
-            mediaPlayer.Play();
-            
+            if (_player == null)
+            {
+                _player = new MediaPlayer();
+            }
+
+            _player.Open(new Uri(@"c:\Users\Owner\desktop\testing.mp3"));
+            _player.Play();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

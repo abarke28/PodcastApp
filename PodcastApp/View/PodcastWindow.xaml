@@ -112,9 +112,8 @@
                                     <Button Grid.Column="1"
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Right"
-                                            DataContext="{Binding Source={StaticResource vm}}"
-                                            Command="{Binding PlayEpisodeCommand}"
-                                            CommandParameter="{Binding SelectedEpisode, Mode=TwoWay}"
+                                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListView, Mode=FindAncestor}, Path=DataContext.PlayEpisodeCommand}"
+                                            CommandParameter="{Binding Mode=OneWay}"
                                             BorderThickness="0"
                                             Background="Transparent">
                                         <Image Source="c:\Users\Owner\source\repos\PodcastApp\PodcastApp\View\AppResources\Play.png"
@@ -133,7 +132,7 @@
                             Background="#e0e0de"
                             Height="50"
                             Grid.ColumnSpan="2">
-                    <Image Source="{Binding SelectedPodcast.ThumbnailFileUrl}" 
+                    <Image Source="{Binding }" 
                            Width="50"
                            Stretch="Fill"/>
                     <Button BorderThickness="0">

@@ -116,7 +116,7 @@ namespace PodcastApp.ViewModel
         {
             //Fetch episodes asynchrously 
 
-            Episodes.Clear();
+            //Episodes.Clear();
             
             var episodes = await RssHelper.GetEpisodesAsync(rssLink).ConfigureAwait(true);
 
@@ -131,7 +131,7 @@ namespace PodcastApp.ViewModel
         {
             ExitCommand = new BaseCommand(x => true, x => ExitApplication());
             NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
-            PlayEpisodeCommand = new BaseCommand(e => CanPlayEpisode(e as Item), e => PlayEpisode(e as Item));
+            PlayEpisodeCommand = new BaseCommand(e => true, e => PlayEpisode(e as Item));
         }
         public static void ExitApplication()
         {
@@ -172,15 +172,28 @@ namespace PodcastApp.ViewModel
         public void PlayEpisode(Item episode)
         {
             Player.PlayingEpisode = episode;
-            Console.WriteLine("Entered Play Episode");
+            System.Diagnostics.Debug.WriteLine("Entered Play Episode");
             Player.PlayAudio();
         }
-        public bool CanPlayEpisode(Item episode)
-        {
-            return true;
-            //return (episode == null ? false : episode.Title == SelectedEpisode.Title);
 
-            //return (episode.Title == SelectedEpisode.Title);
+        public void PauseEpisode()
+        {
+
+        }
+
+        public void ResumeEpisode()
+        {
+
+        }
+
+        public void FastForwardEpisode()
+        {
+
+        }
+
+        public void RewindEpisode()
+        {
+
         }
         private void OnPropertyChanged(string property)
         {
