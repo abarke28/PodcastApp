@@ -156,6 +156,22 @@ namespace PodcastApp.Model
             _player.Open(new Uri(@"c:\Users\Owner\desktop\testing.mp3"));
             _player.Play();
         }
+        public void PauseAudio()
+        {
+
+        }
+        public void ResumeAudio()
+        {
+
+        }
+        public void FastForwardAudio()
+        {
+
+        }
+        public void RewindAudio()
+        {
+
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string property)

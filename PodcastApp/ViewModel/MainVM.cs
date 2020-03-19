@@ -81,7 +81,9 @@ namespace PodcastApp.ViewModel
         public ICommand ExitCommand { get; set; }
         public ICommand NewPodcastCommand { get; set; }
         public ICommand PlayEpisodeCommand { get; set; }
-
+        public ICommand PauseResumeEpisodeCommand { get; set; }
+        public ICommand RewindEpisodeCommand { get; set; }
+        public ICommand ForwardEpisodeCommand { get; set; }
         public MainVM()
         {
             Podcasts = new ObservableCollection<Podcast>();
@@ -132,7 +134,7 @@ namespace PodcastApp.ViewModel
             NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
             PlayEpisodeCommand = new BaseCommand(e => true, e => PlayEpisode(e as Item));
         }
-        public static void ExitApplication()
+        public void ExitApplication()
         {
             Application.Current.Shutdown();
         }
@@ -175,25 +177,17 @@ namespace PodcastApp.ViewModel
             System.Diagnostics.Debug.WriteLine("Entered Play Episode");
             Player.PlayAudio();
         }
-
-        public void PauseEpisode()
+        public void PauseResumeEpisode()
         {
-
+            Player.PauseAudio();
         }
-
-        public void ResumeEpisode()
-        {
-
-        }
-
         public void FastForwardEpisode()
         {
-
+            Player.FastForwardAudio();
         }
-
         public void RewindEpisode()
         {
-
+            Player.RewindAudio();
         }
         private void OnPropertyChanged(string property)
         {
