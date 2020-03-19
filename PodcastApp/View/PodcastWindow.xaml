@@ -140,7 +140,9 @@
                                Height="28"
                                Source="{Binding Player.ReplayImageSource}"/>
                     </Button>
-                    <Button BorderThickness="0">
+                    <Button BorderThickness="0"
+                            Command="{Binding PauseResumeEpisodeCommand}"
+                            CommandParameter="{Binding Player.MediaIsLoaded}">
                         <Image Width="40"
                                Height="35"
                                Source="{Binding Player.PlayPauseImageSource}"/>

@@ -45,8 +45,6 @@ namespace PodcastApp.ViewModel
 
                 XmlReader xmlReader = XmlReader.Create(new StringReader(xml));
 
-                //xmlReader.
-
                 xmlReader.Read();
 
                 PodcastRss podcast = (PodcastRss)xmlSerializer.Deserialize(xmlReader);

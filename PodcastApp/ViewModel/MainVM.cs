@@ -133,6 +133,7 @@ namespace PodcastApp.ViewModel
             ExitCommand = new BaseCommand(x => true, x => ExitApplication());
             NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
             PlayEpisodeCommand = new BaseCommand(e => true, e => PlayEpisode(e as Item));
+            PauseResumeEpisodeCommand = new BaseCommand(b => true, x => PauseResumeEpisode());
         }
         public void ExitApplication()
         {
@@ -177,9 +178,21 @@ namespace PodcastApp.ViewModel
             System.Diagnostics.Debug.WriteLine("Entered Play Episode");
             Player.PlayAudio();
         }
+        public bool CanPauseResumeEpisode()
+        {
+            return Player.MediaIsLoaded;
+        }
         public void PauseResumeEpisode()
         {
-            Player.PauseAudio();
+            switch (Player.IsPlaying)
+            {
+                case true:
+                    Player.PauseAudio();
+                    break;
+                case false:
+                    Player.ResumeAudio();
+                    break;
+            }
         }
         public void FastForwardEpisode()
         {
