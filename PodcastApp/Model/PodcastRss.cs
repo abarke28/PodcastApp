@@ -13,6 +13,19 @@ namespace PodcastApp.Model
         public string ActualString { get; set; }
     }
 
+    [XmlRoot(ElementName = "enclosure")]
+    public class Enclosure
+    {
+        [XmlAttribute(AttributeName = "url")]
+        public string Url { get; set; }
+
+        [XmlAttribute(AttributeName = "type")]
+        public string Type { get; set; }
+
+        [XmlAttribute(AttributeName = "length")]
+        public int Length { get; set; }
+    }
+
     [XmlRoot(ElementName = "item")]
     public class Item
     {
@@ -37,6 +50,9 @@ namespace PodcastApp.Model
 
         [XmlElement(ElementName = "description")]
         public string Description { get; set; }
+
+        [XmlElement(ElementName = "enclosure")]
+        public Enclosure Enclosure { get; set; }
     }
 
     [XmlRoot(ElementName = "channel")]
