@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="cf2d9a2b44014193bb852ba8f0671c76" Name="Diagram1">
-        <EntityTypeShape EntityType="PodcastAppModel.Podcast" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PodcastAppModel.Podcast" Width="2.75" PointX="0.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,8 +30,8 @@ namespace PodcastApp.ViewModel
             }
         }
 
-        private ObservableCollection<Item> _episodes;
-        public ObservableCollection<Item> Episodes
+        private ObservableCollection<SyndicationItem> _episodes;
+        public ObservableCollection<SyndicationItem> Episodes
         {
             get { return _episodes; }
             set
@@ -63,12 +64,12 @@ namespace PodcastApp.ViewModel
                 _selectedPodcast = value;
                 OnPropertyChanged("SelectedPodcast");
                 Episodes.Clear();
-                ReadEpisodesAsync(SelectedPodcast.RssLink);
+                ReadEpisodesFromFeedAsync(SelectedPodcast.RssLink);
             }
         }
 
-        private Item _selectedEpisode;
-        public Item SelectedEpisode
+        private SyndicationItem _selectedEpisode;
+        public SyndicationItem SelectedEpisode
         {
             get { return _selectedEpisode; }
             set
@@ -87,7 +88,7 @@ namespace PodcastApp.ViewModel
         public MainVM()
         {
             Podcasts = new ObservableCollection<Podcast>();
-            Episodes = new ObservableCollection<Item>();
+            Episodes = new ObservableCollection<SyndicationItem>();
             Player = new Player();
 
             InstantiateCommands();
@@ -107,28 +108,30 @@ namespace PodcastApp.ViewModel
                 Podcasts.Add(podcast);
             }
         }
-        public void ReadEpisodes(string rssLink)
+        public void ReadEpisodesFromFeed(string rssLink)
         {
-            // Obsolete - using async method below
+            // Summary
+            //
+            // Fetches episodes synchronously from RSS using System.ServiceModel.Syndication
 
             Episodes.Clear();
 
-            var episodes = RssHelper.GetEpisodes(rssLink);
+            var episodes = RssHelper.GetFeed(rssLink).Items;
 
-            foreach (var episode in episodes)
+            foreach(SyndicationItem episode in episodes)
             {
                 Episodes.Add(episode);
             }
         }
-        public async void ReadEpisodesAsync(string rssLink)
+        public async void ReadEpisodesFromFeedAsync(string rssLink)
         {
-            //Fetch episodes asynchrously 
+            //Summary
+            //
+            // Fetches episodes asynchronously using RssHelper.GetInfoAsync
 
-            var episodes = await RssHelper.GetEpisodesAsync(rssLink).ConfigureAwait(true);
+            var feed = await RssHelper.GetFeedAsync(rssLink).ConfigureAwait(true);
 
-            Episodes.Clear();
-
-            foreach (var episode in episodes)
+            foreach(SyndicationItem episode in feed.Items)
             {
                 Episodes.Add(episode);
             }
@@ -141,7 +144,7 @@ namespace PodcastApp.ViewModel
 
             ExitCommand = new BaseCommand(x => true, x => ExitApplication());
             NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
-            PlayEpisodeCommand = new BaseCommand(e => true, e => PlayEpisode(e as Item));
+            PlayEpisodeCommand = new BaseCommand(e => true, e => PlayEpisode(e as SyndicationItem));
             PauseResumeEpisodeCommand = new BaseCommand(b => true, x => PauseResumeEpisode());
             RewindEpisodeCommand = new BaseCommand(b => true, x => RewindEpisode());
             ForwardEpisodeCommand = new BaseCommand(b => true, x => FastForwardEpisode());
@@ -167,17 +170,16 @@ namespace PodcastApp.ViewModel
             }
 
             Podcast podcast = new Podcast();
-            PodcastRss podcastRss = RssHelper.GetInfo(rssLink);
+            SyndicationFeed syndicationFeed = RssHelper.GetFeed(rssLink);
 
             podcast.RssLink = rssLink;
-            podcast.Title = podcastRss.Channel.Title;
-            podcast.ThumbnailFileUrl = podcastRss.Channel.Image.ImageUrl;
+            podcast.Title = syndicationFeed.Title.Text;
+            podcast.ThumbnailFileUrl = syndicationFeed.ImageUrl.OriginalString;
 
             using (WebClient client = new WebClient())
             {
                 string workingDirectory = Environment.CurrentDirectory;
                 string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
-                //string imageDirectory = 
 
                 podcast.ThumbnailFileLocation = projectDirectory + @"\thumbnails\" + podcast.Title + ".png";
 
@@ -189,7 +191,7 @@ namespace PodcastApp.ViewModel
 
             ReadPodcasts();
         }
-        public void PlayEpisode(Item episode)
+        public void PlayEpisode(SyndicationItem episode)
         {
             // Summary
             //

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -16,7 +17,7 @@ namespace PodcastApp.ViewModel
     {
         public static List<Item> GetEpisodes(string rssLink)
         {
-            // Obsolete. Using Async method.
+            // OBSOLETE. Using GetFeedAsync method for all xml / rss needs
 
             List<Item> posts = new List<Item>();
 
@@ -35,8 +36,9 @@ namespace PodcastApp.ViewModel
             }
             return posts;
         }
-        public static async Task<List<Item>> GetEpisodesAsync(string rssLink)
+        public static async Task<IEnumerable<Item>> GetEpisodesAsync(string rssLink)
         {
+            // OBSOLETE - GetFeedAsync preferred method
             // Summary
             //
             // Fetches list of Episodes from supplied Podcast.
@@ -88,6 +90,7 @@ namespace PodcastApp.ViewModel
         }
         public static async Task<PodcastRss> GetInfoAsync(string rsslink)
         {
+            // OBSOLETE - GetFeedAsync best method
             // Summary
             // 
             // Gets Podcast Info from provided RSS link. Deserialized with XmlDeserializer
@@ -109,6 +112,41 @@ namespace PodcastApp.ViewModel
             }
 
             return podcast;
+        }
+        public static SyndicationFeed GetFeed(string rssLink)
+        {
+            // Summary
+            //
+            // Fetches RSS using System.ServiceModel.Syndication
+
+            XmlReader xmlReader = XmlReader.Create(rssLink);
+
+            SyndicationFeed syndicationFeed = SyndicationFeed.Load(xmlReader);
+
+            xmlReader.Close();
+
+            return syndicationFeed;
+        }
+        public static async Task<SyndicationFeed> GetFeedAsync(string rssLink)
+        {
+            // Summary
+            //
+            // Fetches RSS asynchrosly using System.ServiceModel.Syndication & HttpClient
+
+            HttpClient client = new HttpClient();
+                
+            string xml = await client.GetStringAsync(new Uri(rssLink)).ConfigureAwait(true);
+
+            client.Dispose();
+
+            XmlReader xmlReader = XmlReader.Create(new StringReader(xml));
+
+            SyndicationFeed syndicationFeed = SyndicationFeed.Load(xmlReader);
+
+            xmlReader.Close();
+            xmlReader.Dispose();
+
+            return syndicationFeed;
         }
     }
 }
