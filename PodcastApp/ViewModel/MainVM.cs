@@ -170,17 +170,16 @@ namespace PodcastApp.ViewModel
             }
 
             Podcast podcast = new Podcast();
-            PodcastRss podcastRss = RssHelper.GetInfo(rssLink);
+            SyndicationFeed syndicationFeed = RssHelper.GetFeed(rssLink);
 
             podcast.RssLink = rssLink;
-            podcast.Title = podcastRss.Channel.Title;
-            podcast.ThumbnailFileUrl = podcastRss.Channel.Image.ImageUrl;
+            podcast.Title = syndicationFeed.Title.Text;
+            podcast.ThumbnailFileUrl = syndicationFeed.ImageUrl.OriginalString;
 
             using (WebClient client = new WebClient())
             {
                 string workingDirectory = Environment.CurrentDirectory;
                 string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
-                //string imageDirectory = 
 
                 podcast.ThumbnailFileLocation = projectDirectory + @"\thumbnails\" + podcast.Title + ".png";
 
