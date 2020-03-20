@@ -189,6 +189,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="utils\" />
     <Folder Include="View\UserControls\" />
   </ItemGroup>
   <ItemGroup>

@@ -137,32 +137,6 @@ namespace PodcastApp.ViewModel
                 Episodes.Add(episode);
             }
         }
-        public void ReadEpisodes(string rssLink)
-        {
-            // Obsolete - using async method below
-
-            Episodes.Clear();
-
-            var episodes = RssHelper.GetEpisodes(rssLink);
-
-            foreach (var episode in episodes)
-            {
-                //Episodes.Add(episode);
-            }
-        }
-        public async void ReadEpisodesAsync(string rssLink)
-        {
-            //Fetch episodes asynchrously 
-
-            var episodes = await RssHelper.GetEpisodesAsync(rssLink).ConfigureAwait(true);
-
-            Episodes.Clear();
-
-            foreach (var episode in episodes)
-            {
-                //Episodes.Add(episode);
-            }
-        }
         public void InstantiateCommands()
         {
             // Summary
