@@ -95,6 +95,9 @@ namespace PodcastApp.ViewModel
         }
         public void ReadPodcasts()
         {
+            // Summary
+            // Fetch list of Subscribed Podcasts from MS SQL Database. Utilizing utilities in DatabaseHelper.cs
+
             Podcasts.Clear();
             
             var podcasts = DatabaseHelper.GetPodcasts().OrderBy(p => p.Title);
@@ -106,6 +109,8 @@ namespace PodcastApp.ViewModel
         }
         public void ReadEpisodes(string rssLink)
         {
+            // Obsolete - using async method below
+
             Episodes.Clear();
 
             var episodes = RssHelper.GetEpisodes(rssLink);
@@ -130,6 +135,10 @@ namespace PodcastApp.ViewModel
         }
         public void InstantiateCommands()
         {
+            // Summary
+            //
+            // Instantiate all commands for VM. x = nothing, e = episode, b = boolean predicate
+
             ExitCommand = new BaseCommand(x => true, x => ExitApplication());
             NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
             PlayEpisodeCommand = new BaseCommand(e => true, e => PlayEpisode(e as Item));
@@ -143,6 +152,13 @@ namespace PodcastApp.ViewModel
         }
         public void SubscribePodcast()
         {
+            // Summary
+            //
+            // Gets RSS Link from user. Fetches necessary info from RSS link, deserializes the XML, then inserts into DB.
+            // Downloads thumbnail of the podcast to store locally. 
+
+            // TODO: Explore storing thumbnails in DB
+
             string rssLink = Prompt.ShowDialog("Podcast RSS Link", "Subscribe to New Podcast");
 
             if (String.IsNullOrEmpty(rssLink))
@@ -175,6 +191,10 @@ namespace PodcastApp.ViewModel
         }
         public void PlayEpisode(Item episode)
         {
+            // Summary
+            //
+            // Apply selected episode thumbnail to Player bar, then pass episode to the Player for audio playback.
+
             Player.PlayingEpisode = episode;
             Player.ThumbnailSource = SelectedPodcast.ThumbnailFileLocation;
             System.Diagnostics.Debug.WriteLine("Entered Play Episode");
@@ -182,10 +202,19 @@ namespace PodcastApp.ViewModel
         }
         public bool CanPauseResumeEpisode()
         {
+            // Summary
+            //
+            // Predicate for PauseResumeEpisodeCommand
+
             return Player.MediaIsLoaded;
         }
         public void PauseResumeEpisode()
         {
+            // Summary
+            //
+            // Examine Player flags and call appropriate play or pause function.
+            // Player.cs handles images for playback bar.
+
             switch (Player.IsPlaying)
             {
                 case true:

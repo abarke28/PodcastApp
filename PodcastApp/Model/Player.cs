@@ -162,6 +162,11 @@ namespace PodcastApp.Model
 
         public async void PlayAudio()
         {
+            // Summary
+            //
+            // Fetch RSS supplied audio file. Download locally then play. Explore streaming direct to buffer. Small performance uptick.
+            // Set MediaIsLoaded and IsPlaying flags appropriately to control player image strings for binding with UI
+            
             AudioSource = PlayingEpisode.Link;
 
             System.Diagnostics.Debug.WriteLine("Retrieved Audio URI " + AudioSource.ToString());
@@ -187,19 +192,31 @@ namespace PodcastApp.Model
         }
         public void PauseAudio()
         {
+            //Summary
+            //
+            //Error handling handled in VM caller method
+
             _player.Pause();
             IsPlaying = false;
             System.Diagnostics.Debug.WriteLine("Playback Paused");
         }
         public void ResumeAudio()
         {
+            // Summary
+            //
+            // Error handling handled in VM caller
+
             _player.Play();
             IsPlaying = true;
             System.Diagnostics.Debug.WriteLine("Playback Resumed");
         }
         public void FastForwardAudio()
         {
-            //Sudden skip is audibly jarring. Pause for a moment
+            // Summary
+            //
+            // Check if we are within jump time from end of audio. If so, end playback and set flags appropriately.
+            // Else advance 10s. Sudden skip is jarring so pause for 350ms
+            
             _player.Pause();
             System.Threading.Thread.Sleep(350);
 
@@ -217,7 +234,10 @@ namespace PodcastApp.Model
         }
         public void RewindAudio()
         {
-            //Sudden rewind is audibly jarring. Pause for a moment
+            // Summary
+            //
+            // Check we are not within skip time from start. If we are, go to position 0. 
+            // Else, rewind 10s. Sudden rewind is audibly jarring. Pause for a moment
 
             if (_player.Position < TimeSpan.FromSeconds(10))
             {

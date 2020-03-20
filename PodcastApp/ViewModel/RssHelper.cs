@@ -16,6 +16,8 @@ namespace PodcastApp.ViewModel
     {
         public static List<Item> GetEpisodes(string rssLink)
         {
+            // Obsolete. Using Async method.
+
             List<Item> posts = new List<Item>();
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(PodcastRss));
@@ -35,6 +37,14 @@ namespace PodcastApp.ViewModel
         }
         public static async Task<List<Item>> GetEpisodesAsync(string rssLink)
         {
+            // Summary
+            //
+            // Fetches list of Episodes from supplied Podcast.
+            // Download RSS xml from web. Deserialize as per attributes in PodcastRSS.cs
+            // Using XmlSerialer and XmlReader classes.
+
+            //TODO: Add more error handling - not all podcasts implement standard the same.
+
             List<Item> posts = new List<Item>();
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(PodcastRss));
@@ -58,6 +68,8 @@ namespace PodcastApp.ViewModel
         }
         public static PodcastRss GetInfo(string rsslink)
         {
+            // Obsolete. Using async method
+
             PodcastRss podcast = new PodcastRss();
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(PodcastRss));
@@ -76,6 +88,12 @@ namespace PodcastApp.ViewModel
         }
         public static async Task<PodcastRss> GetInfoAsync(string rsslink)
         {
+            // Summary
+            // 
+            // Gets Podcast Info from provided RSS link. Deserialized with XmlDeserializer
+            
+            //TODO: Add more error handling.
+
             PodcastRss podcast = new PodcastRss();
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(PodcastRss));
