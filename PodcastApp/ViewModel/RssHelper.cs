@@ -17,7 +17,7 @@ namespace PodcastApp.ViewModel
     {
         public static List<Item> GetEpisodes(string rssLink)
         {
-            // Obsolete. Using Async method.
+            // OBSOLETE. Using GetFeedAsync method for all xml / rss needs
 
             List<Item> posts = new List<Item>();
 
@@ -38,6 +38,7 @@ namespace PodcastApp.ViewModel
         }
         public static async Task<IEnumerable<Item>> GetEpisodesAsync(string rssLink)
         {
+            // OBSOLETE - GetFeedAsync preferred method
             // Summary
             //
             // Fetches list of Episodes from supplied Podcast.
@@ -89,6 +90,7 @@ namespace PodcastApp.ViewModel
         }
         public static async Task<PodcastRss> GetInfoAsync(string rsslink)
         {
+            // OBSOLETE - GetFeedAsync best method
             // Summary
             // 
             // Gets Podcast Info from provided RSS link. Deserialized with XmlDeserializer
@@ -125,7 +127,6 @@ namespace PodcastApp.ViewModel
 
             return syndicationFeed;
         }
-
         public static async Task<SyndicationFeed> GetFeedAsync(string rssLink)
         {
             // Summary

@@ -116,6 +116,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PodcastDb.edmx</DependentUpon>
     </Compile>
+    <Compile Include="utils\Serializer.cs" />
     <Compile Include="ViewModel\Commands\BaseCommand.cs" />
     <Compile Include="ViewModel\DatabaseHelper.cs" />
     <Compile Include="ViewModel\MainVM.cs" />
@@ -189,7 +190,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="utils\" />
     <Folder Include="View\UserControls\" />
   </ItemGroup>
   <ItemGroup>

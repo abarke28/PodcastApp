@@ -112,7 +112,7 @@ namespace PodcastApp.ViewModel
         {
             // Summary
             //
-            // Fetches episodes from RSS using System.ServiceModel.Syndication
+            // Fetches episodes synchronously from RSS using System.ServiceModel.Syndication
 
             Episodes.Clear();
 
@@ -123,12 +123,11 @@ namespace PodcastApp.ViewModel
                 Episodes.Add(episode);
             }
         }
-
         public async void ReadEpisodesFromFeedAsync(string rssLink)
         {
             //Summary
             //
-            // Fetches episodes using RssHelper.GetInfoAsync
+            // Fetches episodes asynchronously using RssHelper.GetInfoAsync
 
             var feed = await RssHelper.GetFeedAsync(rssLink).ConfigureAwait(true);
 
