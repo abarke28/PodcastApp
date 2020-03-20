@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -109,6 +110,20 @@ namespace PodcastApp.ViewModel
             }
 
             return podcast;
+        }
+        public static SyndicationFeed GetFeed(string rssLink)
+        {
+            // Summary
+            //
+            // Fetches RSS using System.ServiceModel.Syndication
+
+            XmlReader xmlReader = XmlReader.Create(rssLink);
+
+            SyndicationFeed syndicationFeed = SyndicationFeed.Load(xmlReader);
+
+            xmlReader.Close();
+
+            return syndicationFeed;
         }
     }
 }

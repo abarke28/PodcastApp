@@ -7,6 +7,7 @@ using System.Linq;
 using System.Media;
 using System.Net;
 using System.Net.Http;
+using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -137,8 +138,8 @@ namespace PodcastApp.Model
             }
         }
 
-        private Item _playingEpisode;
-        public Item PlayingEpisode
+        private SyndicationItem _playingEpisode;
+        public SyndicationItem PlayingEpisode
         {
             get { return _playingEpisode; }
             set
@@ -166,17 +167,17 @@ namespace PodcastApp.Model
             //
             // Fetch RSS supplied audio file. Download locally then play. Explore streaming direct to buffer. Small performance uptick.
             // Set MediaIsLoaded and IsPlaying flags appropriately to control player image strings for binding with UI
-            
-            AudioSource = PlayingEpisode.Enclosure.Url;
+
+            AudioSource = PlayingEpisode.Links.First().Uri.OriginalString;
 
             System.Diagnostics.Debug.WriteLine("Retrieved Audio URI " + AudioSource.ToString());
 
             //AudioSource = @"https://dts.podtrac.com/redirect.mp3/media.blubrry.com/99percentinvisible/dovetail.prxu.org/96/0a4c4316-2d21-4e3b-82ba-d35f8b74aa3f/393_Map_Quest_pt01.mp3";
 
-            //using (WebClient webClient = new WebClient())
-            //{
-            //    await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\" + PlayingEpisode.Title + @".mp3");
-            //}
+            using (WebClient webClient = new WebClient())
+            {
+                await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\" + PlayingEpisode.Title + @".mp3");
+            }
 
             if (_player == null) _player = new MediaPlayer();
 

@@ -99,13 +99,13 @@
                                         </Grid.RowDefinitions>
                                         <Label Grid.Row="0" 
                                                HorizontalAlignment="Left">
-                                            <TextBlock Text="{Binding Title}"
+                                            <TextBlock Text="{Binding Title.Text}"
                                                        TextWrapping="WrapWithOverflow"
                                                        FontWeight="DemiBold"/>
                                         </Label>
                                         <Label Grid.Row="1" 
                                                HorizontalAlignment="Left">
-                                            <TextBlock Text="{Binding PubDate}"
+                                            <TextBlock Text="{Binding PublishDate.LocalDateTime}"
                                                        Foreground="#5890cc"/>
                                         </Label>
                                     </Grid>

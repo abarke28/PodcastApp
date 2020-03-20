@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,8 +30,8 @@ namespace PodcastApp.ViewModel
             }
         }
 
-        private ObservableCollection<Item> _episodes;
-        public ObservableCollection<Item> Episodes
+        private ObservableCollection<SyndicationItem> _episodes;
+        public ObservableCollection<SyndicationItem> Episodes
         {
             get { return _episodes; }
             set
@@ -63,12 +64,12 @@ namespace PodcastApp.ViewModel
                 _selectedPodcast = value;
                 OnPropertyChanged("SelectedPodcast");
                 Episodes.Clear();
-                ReadEpisodesAsync(SelectedPodcast.RssLink);
+                ReadEpisodesFromFeed(SelectedPodcast.RssLink);
             }
         }
 
-        private Item _selectedEpisode;
-        public Item SelectedEpisode
+        private SyndicationItem _selectedEpisode;
+        public SyndicationItem SelectedEpisode
         {
             get { return _selectedEpisode; }
             set
@@ -87,7 +88,7 @@ namespace PodcastApp.ViewModel
         public MainVM()
         {
             Podcasts = new ObservableCollection<Podcast>();
-            Episodes = new ObservableCollection<Item>();
+            Episodes = new ObservableCollection<SyndicationItem>();
             Player = new Player();
 
             InstantiateCommands();
@@ -107,6 +108,21 @@ namespace PodcastApp.ViewModel
                 Podcasts.Add(podcast);
             }
         }
+        public void ReadEpisodesFromFeed(string rssLink)
+        {
+            // Summary
+            //
+            // Fetches episodes from RSS using System.ServiceModel.Syndication
+
+            Episodes.Clear();
+
+            var episodes = RssHelper.GetFeed(rssLink).Items;
+
+            foreach(SyndicationItem episode in episodes)
+            {
+                Episodes.Add(episode);
+            }
+        }
         public void ReadEpisodes(string rssLink)
         {
             // Obsolete - using async method below
@@ -117,7 +133,7 @@ namespace PodcastApp.ViewModel
 
             foreach (var episode in episodes)
             {
-                Episodes.Add(episode);
+                //Episodes.Add(episode);
             }
         }
         public async void ReadEpisodesAsync(string rssLink)
@@ -130,7 +146,7 @@ namespace PodcastApp.ViewModel
 
             foreach (var episode in episodes)
             {
-                Episodes.Add(episode);
+                //Episodes.Add(episode);
             }
         }
         public void InstantiateCommands()
@@ -141,7 +157,7 @@ namespace PodcastApp.ViewModel
 
             ExitCommand = new BaseCommand(x => true, x => ExitApplication());
             NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
-            PlayEpisodeCommand = new BaseCommand(e => true, e => PlayEpisode(e as Item));
+            PlayEpisodeCommand = new BaseCommand(e => true, e => PlayEpisode(e as SyndicationItem));
             PauseResumeEpisodeCommand = new BaseCommand(b => true, x => PauseResumeEpisode());
             RewindEpisodeCommand = new BaseCommand(b => true, x => RewindEpisode());
             ForwardEpisodeCommand = new BaseCommand(b => true, x => FastForwardEpisode());
@@ -189,7 +205,7 @@ namespace PodcastApp.ViewModel
 
             ReadPodcasts();
         }
-        public void PlayEpisode(Item episode)
+        public void PlayEpisode(SyndicationItem episode)
         {
             // Summary
             //
