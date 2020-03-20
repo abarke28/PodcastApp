@@ -36,7 +36,7 @@ namespace PodcastApp.ViewModel
             }
             return posts;
         }
-        public static async Task<List<Item>> GetEpisodesAsync(string rssLink)
+        public static async Task<IEnumerable<Item>> GetEpisodesAsync(string rssLink)
         {
             // Summary
             //
@@ -124,6 +124,28 @@ namespace PodcastApp.ViewModel
             xmlReader.Close();
 
             return syndicationFeed;
+        }
+
+        public static async Task<IEnumerable<SyndicationItem>> GetFeedItemsAsync(string rssLink)
+        {
+            // Summary
+            //
+            // Fetches RSS asynchrosly using System.ServiceModel.Syndication & HttpClient
+
+            HttpClient client = new HttpClient();
+                
+            string xml = await client.GetStringAsync(new Uri(rssLink)).ConfigureAwait(true);
+
+            client.Dispose();
+
+            XmlReader xmlReader = XmlReader.Create(new StringReader(xml));
+
+            SyndicationFeed syndicationFeed = SyndicationFeed.Load(xmlReader);
+
+            xmlReader.Close();
+            xmlReader.Dispose();
+
+            return syndicationFeed.Items;
         }
     }
 }

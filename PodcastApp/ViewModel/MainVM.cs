@@ -123,6 +123,20 @@ namespace PodcastApp.ViewModel
                 Episodes.Add(episode);
             }
         }
+
+        public async void ReadEpisodesFromFeedAsync(string rssLink)
+        {
+            //Summary
+            //
+            // Fetches episodes using RssHelper.GetInfoAsync
+
+            var episodes = await RssHelper.GetFeedItemsAsync(rssLink).ConfigureAwait(true);
+
+            foreach(SyndicationItem episode in episodes)
+            {
+                Episodes.Add(episode);
+            }
+        }
         public void ReadEpisodes(string rssLink)
         {
             // Obsolete - using async method below
