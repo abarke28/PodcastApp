@@ -167,20 +167,22 @@ namespace PodcastApp.Model
             // Fetch RSS supplied audio file. Download locally then play. Explore streaming direct to buffer. Small performance uptick.
             // Set MediaIsLoaded and IsPlaying flags appropriately to control player image strings for binding with UI
             
-            AudioSource = PlayingEpisode.Link;
+            AudioSource = PlayingEpisode.Enclosure.Url;
 
             System.Diagnostics.Debug.WriteLine("Retrieved Audio URI " + AudioSource.ToString());
 
-            AudioSource = @"https://dts.podtrac.com/redirect.mp3/media.blubrry.com/99percentinvisible/dovetail.prxu.org/96/0a4c4316-2d21-4e3b-82ba-d35f8b74aa3f/393_Map_Quest_pt01.mp3";
+            //AudioSource = @"https://dts.podtrac.com/redirect.mp3/media.blubrry.com/99percentinvisible/dovetail.prxu.org/96/0a4c4316-2d21-4e3b-82ba-d35f8b74aa3f/393_Map_Quest_pt01.mp3";
 
-            using (WebClient webClient = new WebClient())
-            {
-                await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\testing.mp3");
-            }
+            //using (WebClient webClient = new WebClient())
+            //{
+            //    await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\" + PlayingEpisode.Title + @".mp3");
+            //}
 
             if (_player == null) _player = new MediaPlayer();
 
-            _player.Open(new Uri(@"c:\Users\Owner\desktop\testing.mp3"));
+            //_player.Open(new Uri(@"c:\Users\Owner\desktop\testing.mp3"));
+
+            _player.Open(new Uri(AudioSource));
             MediaIsLoaded = true;
 
             System.Diagnostics.Debug.WriteLine("MediaIsLoaded = {0}", MediaIsLoaded);

@@ -43,7 +43,7 @@ namespace PodcastApp.ViewModel
             // Download RSS xml from web. Deserialize as per attributes in PodcastRSS.cs
             // Using XmlSerialer and XmlReader classes.
 
-            //TODO: Add more error handling - not all podcasts implement standard the same.
+            //TODO: Add more error handling - not all podcasts implement RSS standard the same.
 
             List<Item> posts = new List<Item>();
 
