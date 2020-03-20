@@ -64,7 +64,7 @@ namespace PodcastApp.ViewModel
                 _selectedPodcast = value;
                 OnPropertyChanged("SelectedPodcast");
                 Episodes.Clear();
-                ReadEpisodesFromFeed(SelectedPodcast.RssLink);
+                ReadEpisodesFromFeedAsync(SelectedPodcast.RssLink);
             }
         }
 
@@ -130,9 +130,9 @@ namespace PodcastApp.ViewModel
             //
             // Fetches episodes using RssHelper.GetInfoAsync
 
-            var episodes = await RssHelper.GetFeedItemsAsync(rssLink).ConfigureAwait(true);
+            var feed = await RssHelper.GetFeedAsync(rssLink).ConfigureAwait(true);
 
-            foreach(SyndicationItem episode in episodes)
+            foreach(SyndicationItem episode in feed.Items)
             {
                 Episodes.Add(episode);
             }

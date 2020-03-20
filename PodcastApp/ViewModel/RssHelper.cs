@@ -126,7 +126,7 @@ namespace PodcastApp.ViewModel
             return syndicationFeed;
         }
 
-        public static async Task<IEnumerable<SyndicationItem>> GetFeedItemsAsync(string rssLink)
+        public static async Task<SyndicationFeed> GetFeedAsync(string rssLink)
         {
             // Summary
             //
@@ -145,7 +145,7 @@ namespace PodcastApp.ViewModel
             xmlReader.Close();
             xmlReader.Dispose();
 
-            return syndicationFeed.Items;
+            return syndicationFeed;
         }
     }
 }
