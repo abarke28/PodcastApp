@@ -85,6 +85,7 @@ namespace PodcastApp.ViewModel
         public ICommand PauseResumeEpisodeCommand { get; set; }
         public ICommand RewindEpisodeCommand { get; set; }
         public ICommand ForwardEpisodeCommand { get; set; }
+        public ICommand MuteUnmuteEpisodeCommand { get; set; }
         public MainVM()
         {
             Podcasts = new ObservableCollection<Podcast>();
@@ -148,6 +149,7 @@ namespace PodcastApp.ViewModel
             PauseResumeEpisodeCommand = new BaseCommand(b => true, x => PauseResumeEpisode());
             RewindEpisodeCommand = new BaseCommand(b => true, x => RewindEpisode());
             ForwardEpisodeCommand = new BaseCommand(b => true, x => FastForwardEpisode());
+            MuteUnmuteEpisodeCommand = new BaseCommand(b => true, x => MuteUnmuteEpisode());
         }
         public void ExitApplication()
         {
@@ -205,7 +207,6 @@ namespace PodcastApp.ViewModel
 
             Player.PlayingEpisode = episode;
             Player.ThumbnailSource = SelectedPodcast.ThumbnailFileLocation;
-            System.Diagnostics.Debug.WriteLine("Entered Play Episode");
             Player.PlayAudio();
         }
         public bool CanPauseResumeEpisode()
@@ -240,6 +241,18 @@ namespace PodcastApp.ViewModel
         public void RewindEpisode()
         {
             Player.RewindAudio();
+        }
+        public void MuteUnmuteEpisode()
+        {
+            switch (Player.IsMuted)
+            {
+                case true:
+                    Player.UnmuteAudio();
+                    break;
+                case false:
+                    Player.MuteAudio();
+                    break;
+            }
         }
         private void OnPropertyChanged(string property)
         {

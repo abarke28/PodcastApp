@@ -42,6 +42,29 @@ namespace PodcastApp.Model
             }
         }
 
+        private bool _isMuted;
+        public bool IsMuted
+        {
+            get { return _isMuted; }
+            set
+            {
+                if (_isMuted == value) return;
+                _isMuted = value;
+
+                switch (_isMuted)
+                {
+                    case true:
+                        AudioStateImageSource = AppResources.MUTED_IMAGE;
+                        break;
+                    case false:
+                        AudioStateImageSource = AppResources.PLAYING_SOUND_IMAGE;
+                        break;
+                }
+
+                OnPropertyChanged("IsMuted");
+            }
+        }
+
         private bool _mediaIsLoaded;
         public bool MediaIsLoaded
         {
@@ -260,6 +283,14 @@ namespace PodcastApp.Model
                 _player.Position -= TimeSpan.FromSeconds(10);
                 _player.Play();
             }
+        }
+        public void MuteAudio()
+        {
+            _player.IsMuted = true;
+        }
+        public void UnmuteAudio()
+        {
+            _player.IsMuted = false;
         }
         public static string ResolveUri(SyndicationItem item)
         {
