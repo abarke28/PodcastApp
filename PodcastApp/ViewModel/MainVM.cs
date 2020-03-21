@@ -195,7 +195,13 @@ namespace PodcastApp.ViewModel
         {
             // Summary
             //
+            // Check if Player is already playing. If so, stop current playback. 
             // Apply selected episode thumbnail to Player bar, then pass episode to the Player for audio playback.
+
+            if (Player.PlayingEpisode != null)
+            {
+                Player.StopAudio();
+            }
 
             Player.PlayingEpisode = episode;
             Player.ThumbnailSource = SelectedPodcast.ThumbnailFileLocation;

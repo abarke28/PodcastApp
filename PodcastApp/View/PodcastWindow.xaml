@@ -156,7 +156,7 @@
                                Height="28"
                                Source="{Binding Player.ForwardImageSource}"/>
                     </Button>
-                    <TextBlock Text="{Binding Player.PlayingEpisode.Title}"
+                    <TextBlock Text="{Binding Player.PlayingEpisode.Title.Text}"
                                Padding="7"
                                FontSize="20"
                                Width="520"

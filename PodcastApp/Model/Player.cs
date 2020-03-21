@@ -168,29 +168,24 @@ namespace PodcastApp.Model
             // Fetch RSS supplied audio file. Download locally then play. Explore streaming direct to buffer. Small performance uptick.
             // Set MediaIsLoaded and IsPlaying flags appropriately to control player image strings for binding with UI
 
-            AudioSource = PlayingEpisode.Links.First().Uri.OriginalString;
-
-            System.Diagnostics.Debug.WriteLine("Retrieved Audio URI " + AudioSource.ToString());
-
-            //AudioSource = @"https://dts.podtrac.com/redirect.mp3/media.blubrry.com/99percentinvisible/dovetail.prxu.org/96/0a4c4316-2d21-4e3b-82ba-d35f8b74aa3f/393_Map_Quest_pt01.mp3";
+            AudioSource = ResolveUri(PlayingEpisode);
 
             using (WebClient webClient = new WebClient())
             {
-                await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\" + PlayingEpisode.Title + @".mp3");
+                await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\playingaudio.mp3");
+                // await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\" + PlayingEpisode.Title.Text + @".mp3");
             }
 
             if (_player == null) _player = new MediaPlayer();
 
-            //_player.Open(new Uri(@"c:\Users\Owner\desktop\testing.mp3"));
+            _player.Open(new Uri(@"c:\Users\Owner\desktop\playingaudio.mp3"));
+            // _player.Open(new Uri(@"c:\Users\Owner\desktop\" + PlayingEpisode.Title.Text + @".mp3"));
 
-            _player.Open(new Uri(AudioSource));
             MediaIsLoaded = true;
 
-            System.Diagnostics.Debug.WriteLine("MediaIsLoaded = {0}", MediaIsLoaded);
-
             _player.Position = TimeSpan.Zero;
-
             _player.Play();
+
             IsPlaying = true;
         }
         public void PauseAudio()
@@ -212,6 +207,14 @@ namespace PodcastApp.Model
             _player.Play();
             IsPlaying = true;
             System.Diagnostics.Debug.WriteLine("Playback Resumed");
+        }
+        public void StopAudio()
+        {
+            _player.Stop();
+            _player.Close();
+            IsPlaying = false;
+            MediaIsLoaded = false;
+            ThumbnailSource = AppResources.BLANK_IMAGE;
         }
         public void FastForwardAudio()
         {
@@ -257,6 +260,24 @@ namespace PodcastApp.Model
                 _player.Position -= TimeSpan.FromSeconds(10);
                 _player.Play();
             }
+        }
+        public static string ResolveUri(SyndicationItem item)
+        {
+            string resolvedUri = null;
+
+            var uri = item.Links.Where(l => l.RelationshipType == "enclosure").First().Uri;
+
+            if (uri.Query != null)
+            {
+                resolvedUri = uri.Scheme + @"://" + uri.Authority + uri.AbsolutePath;
+            }
+
+            else
+            {
+                resolvedUri = uri.OriginalString;
+            }
+
+            return resolvedUri;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
