@@ -190,21 +190,23 @@ namespace PodcastApp.Model
         {
             // Summary
             //
-            // Fetch RSS supplied audio file. Download locally then play. Explore streaming direct to buffer. Small performance uptick.
+            // Fetch RSS supplied audio file. Download locally then play. Resolves Uri and removes illegal directory characters before playing.
             // Set MediaIsLoaded and IsPlaying flags appropriately to control player image strings for binding with UI
 
             AudioSource = ResolveUri(PlayingEpisode);
 
+            string resolvedTitle = ResolveTitle(PlayingEpisode);
+
             using (WebClient webClient = new WebClient())
             {
-                await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\playingaudio.mp3");
-                // await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\" + PlayingEpisode.Title.Text + @".mp3");
+                // await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\playingaudio.mp3");
+                await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\" + resolvedTitle + @".mp3");
             }
 
             if (_player == null) _player = new MediaPlayer();
 
-            _player.Open(new Uri(@"c:\Users\Owner\desktop\playingaudio.mp3"));
-            // _player.Open(new Uri(@"c:\Users\Owner\desktop\" + PlayingEpisode.Title.Text + @".mp3"));
+            // _player.Open(new Uri(@"c:\Users\Owner\desktop\playingaudio.mp3"));
+            _player.Open(new Uri(@"c:\Users\Owner\desktop\" + resolvedTitle + @".mp3"));
 
             MediaIsLoaded = true;
 
@@ -221,7 +223,6 @@ namespace PodcastApp.Model
 
             _player.Pause();
             IsPlaying = false;
-            System.Diagnostics.Debug.WriteLine("Playback Paused");
         }
         public void ResumeAudio()
         {
@@ -231,10 +232,13 @@ namespace PodcastApp.Model
 
             _player.Play();
             IsPlaying = true;
-            System.Diagnostics.Debug.WriteLine("Playback Resumed");
         }
         public void StopAudio()
         {
+            // Summary
+            //
+            // Stop and close media on player before, reset appropriate image sources
+
             _player.Stop();
             _player.Close();
             IsPlaying = false;
@@ -294,7 +298,7 @@ namespace PodcastApp.Model
         {
             IsMuted = false;
         }
-        public static string ResolveUri(SyndicationItem item)
+        private static string ResolveUri(SyndicationItem item)
         {
             string resolvedUri = null;
 
@@ -311,6 +315,22 @@ namespace PodcastApp.Model
             }
 
             return resolvedUri;
+        }
+        private static string ResolveTitle(SyndicationItem item)
+        {
+            // Summary
+            //
+            // Parse title for invalid filename characters and remove them
+
+            string invalidCharacters = new string(Path.GetInvalidFileNameChars());
+            string resolvedTitle = item.Title.Text;
+
+            foreach (char c in invalidCharacters)
+            {
+                resolvedTitle = resolvedTitle.Replace(c.ToString(), "");
+            }
+
+            return resolvedTitle;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
