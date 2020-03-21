@@ -54,9 +54,11 @@ namespace PodcastApp.Model
                 switch (_isMuted)
                 {
                     case true:
+                        _player.IsMuted = true;
                         AudioStateImageSource = AppResources.MUTED_IMAGE;
                         break;
                     case false:
+                        _player.IsMuted = false;
                         AudioStateImageSource = AppResources.PLAYING_SOUND_IMAGE;
                         break;
                 }
@@ -286,11 +288,11 @@ namespace PodcastApp.Model
         }
         public void MuteAudio()
         {
-            _player.IsMuted = true;
+            IsMuted = true;
         }
         public void UnmuteAudio()
         {
-            _player.IsMuted = false;
+            IsMuted = false;
         }
         public static string ResolveUri(SyndicationItem item)
         {
