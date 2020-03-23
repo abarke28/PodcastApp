@@ -10,30 +10,40 @@ namespace PodcastApp.config
 {
     public class Config
     {
-        public static string AppDirectory { get; private set; }
-        public static string AppConfigDirectory { get; private set; }
-        public static string AppConfigFile { get; private set; } = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\config\config.xml";
-        public static string AudioFilesDirectory { get; private set; }
-        public static string PodcastThumbnailsDirectory { get; private set; }
-        public static string AppVisualResourcesDirectory { get; private set; }
-        public static string AppName { get; private set; } = "Poor Yorrick Podcasts";
+        public string AppDirectory { get; set; }
+        public string AppConfigDirectory { get; set; }
+        public static string AppConfigFile { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\config\config.xml";
+        public string AudioFilesDirectory { get; set; }
+        public string PodcastThumbnailsDirectory { get; set; }
+        public string AppVisualResourcesDirectory { get; set; }
+        public string AppName { get; set; } = "Poor Yorrick Podcasts";
         private Config()
         {
-
             AppDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\" + AppName;
+            Directory.CreateDirectory(AppDirectory);
+
             AppConfigDirectory = AppDirectory + @"\config";
             AppConfigFile = AppConfigDirectory + @"\config.xml";
+            Directory.CreateDirectory(AppConfigDirectory);
+
             AudioFilesDirectory = AppDirectory + @"\audio";
+            Directory.CreateDirectory(AudioFilesDirectory);
+
             PodcastThumbnailsDirectory = AppDirectory + @"\thumbnails";
+            Directory.CreateDirectory(PodcastThumbnailsDirectory);
+
             AppVisualResourcesDirectory = AppDirectory + @"\images";
+            Directory.CreateDirectory(AppVisualResourcesDirectory);
         }
         public static Config GetConfig()
         {
             if (!File.Exists(AppConfigFile))
             {
-                return new Config();
+                Config config = new Config();
+                Serializer.SerializeToXmlFile<Config>(AppConfigFile, config);
             }
-            return Serializer.DeserializeFromXmlFile<Config>(AppConfigDirectory + @"\config.xml");
+
+            return Serializer.DeserializeFromXmlFile<Config>(AppConfigFile) ;
         }
     }
 }

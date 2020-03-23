@@ -86,6 +86,7 @@ namespace PodcastApp.ViewModel
         public ICommand RewindEpisodeCommand { get; set; }
         public ICommand ForwardEpisodeCommand { get; set; }
         public ICommand MuteUnmuteEpisodeCommand { get; set; }
+        public ICommand ClearDownloadsCommand { get; set; }
         public MainVM()
         {
             Podcasts = new ObservableCollection<Podcast>();
@@ -253,6 +254,10 @@ namespace PodcastApp.ViewModel
                     Player.MuteAudio();
                     break;
             }
+        }
+        public void ClearDownloadedEpisodes()
+        {
+
         }
         private void OnPropertyChanged(string property)
         {
