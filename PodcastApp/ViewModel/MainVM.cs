@@ -1,4 +1,5 @@
-﻿using PodcastApp.Model;
+﻿using PodcastApp.config;
+using PodcastApp.Model;
 using PodcastApp.View;
 using PodcastApp.ViewModel.Commands;
 using System;
@@ -151,6 +152,7 @@ namespace PodcastApp.ViewModel
             RewindEpisodeCommand = new BaseCommand(b => true, x => RewindEpisode());
             ForwardEpisodeCommand = new BaseCommand(b => true, x => FastForwardEpisode());
             MuteUnmuteEpisodeCommand = new BaseCommand(b => true, x => MuteUnmuteEpisode());
+            ClearDownloadsCommand = new BaseCommand(x => true, x => ClearDownloadedEpisodes());
         }
         public void ExitApplication()
         {
@@ -257,7 +259,28 @@ namespace PodcastApp.ViewModel
         }
         public void ClearDownloadedEpisodes()
         {
+            // Summary
+            //
+            // Delete all downloaded episodes
 
+            DirectoryInfo directoryInfo = new DirectoryInfo(Config.GetConfig().AudioFilesDirectory);
+            int numDeletedFiles = 0;
+            int numTotalFiles = directoryInfo.GetFiles().Length;
+            
+            foreach (FileInfo fileInfo in directoryInfo.GetFiles())
+            {
+                try
+                {
+                    fileInfo.Delete();
+                    numDeletedFiles++;
+                }
+                catch (Exception)
+                {
+                    System.Diagnostics.Debug.WriteLine("Could not delete file {0}", fileInfo.Name);
+                }
+            }
+
+            System.Diagnostics.Debug.WriteLine("Deleted {0}/{1} files", numDeletedFiles, numTotalFiles);
         }
         private void OnPropertyChanged(string property)
         {

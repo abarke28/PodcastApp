@@ -16,7 +16,8 @@
                 <MenuItem Header="File">
                     <MenuItem Header="Add New Podcast (RSS)"
                               Command="{Binding NewPodcastCommand}"/>
-                    <MenuItem Header="Clear Downloads"/>
+                    <MenuItem Header="Clear Downloads"
+                              Command="{Binding ClearDownloadsCommand}"/>
                     <Separator/>
                     <MenuItem Header="Exit"
                               Command="{Binding ExitCommand}"/>

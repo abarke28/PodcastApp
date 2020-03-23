@@ -19,6 +19,11 @@ namespace PodcastApp.config
         public string AppName { get; set; } = "Poor Yorrick Podcasts";
         private Config()
         {
+            // Summary
+            //
+            // Private constructor that would only be called if no config is already present
+            // therefore, create appropriate directories
+
             AppDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\" + AppName;
             Directory.CreateDirectory(AppDirectory);
 
@@ -37,6 +42,11 @@ namespace PodcastApp.config
         }
         public static Config GetConfig()
         {
+            // Summary
+            //
+            // Check if config file already exists, if so returns it. Else, call private
+            // constructor to build the directories and config file
+
             if (!File.Exists(AppConfigFile))
             {
                 Config config = new Config();
