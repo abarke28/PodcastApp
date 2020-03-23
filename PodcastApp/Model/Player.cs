@@ -197,16 +197,22 @@ namespace PodcastApp.Model
 
             string resolvedTitle = ResolveTitle(PlayingEpisode);
 
+            System.Diagnostics.Debug.WriteLine(Directory.GetCurrentDirectory());
+
+            System.Diagnostics.Debug.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData));
+
+            string downloadPath = @"c:\Users\Owner\desktop\";
+
+            //TODO: Change download directory away from desktop, also check if file is downloaded before re-downloading
+
             using (WebClient webClient = new WebClient())
             {
-                // await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\playingaudio.mp3");
-                await webClient.DownloadFileTaskAsync(AudioSource, @"c:\Users\owner\desktop\" + resolvedTitle + @".mp3");
+                await webClient.DownloadFileTaskAsync(AudioSource, downloadPath + resolvedTitle + @".mp3");
             }
 
             if (_player == null) _player = new MediaPlayer();
 
-            // _player.Open(new Uri(@"c:\Users\Owner\desktop\playingaudio.mp3"));
-            _player.Open(new Uri(@"c:\Users\Owner\desktop\" + resolvedTitle + @".mp3"));
+            _player.Open(new Uri(downloadPath + resolvedTitle + @".mp3"));
 
             MediaIsLoaded = true;
 
