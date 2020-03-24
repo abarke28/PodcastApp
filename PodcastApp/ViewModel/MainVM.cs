@@ -183,12 +183,10 @@ namespace PodcastApp.ViewModel
 
             using (WebClient client = new WebClient())
             {
-                string workingDirectory = Environment.CurrentDirectory;
-                string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
+                string thumbnailDirectory = Config.GetConfig().PodcastThumbnailsDirectory + @"\";
 
-                podcast.ThumbnailFileLocation = projectDirectory + @"\thumbnails\" + podcast.Title + ".png";
+                podcast.ThumbnailFileLocation = thumbnailDirectory + podcast.Title + ".png";
 
-                Directory.CreateDirectory(projectDirectory + @"\thumbnails");
                 client.DownloadFile(new Uri(podcast.ThumbnailFileUrl), podcast.ThumbnailFileLocation);
             }
 
@@ -261,7 +259,9 @@ namespace PodcastApp.ViewModel
         {
             // Summary
             //
-            // Delete all downloaded episodes
+            // Delete all downloaded episodes. Try each file.
+
+            // TODO: Add Dialog of episode not being able to be deleted.
 
             DirectoryInfo directoryInfo = new DirectoryInfo(Config.GetConfig().AudioFilesDirectory);
             int numDeletedFiles = 0;
