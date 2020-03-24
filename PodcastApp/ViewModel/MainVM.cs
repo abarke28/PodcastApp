@@ -165,8 +165,6 @@ namespace PodcastApp.ViewModel
             // Gets RSS Link from user. Fetches necessary info from RSS link, deserializes the XML, then inserts into DB.
             // Downloads thumbnail of the podcast to store locally. 
 
-            // TODO: Explore storing thumbnails in DB
-
             string rssLink = Prompt.ShowDialog("Podcast RSS Link", "Subscribe to New Podcast");
 
             if (String.IsNullOrEmpty(rssLink))
@@ -259,9 +257,7 @@ namespace PodcastApp.ViewModel
         {
             // Summary
             //
-            // Delete all downloaded episodes. Try each file.
-
-            // TODO: Add Dialog of episode not being able to be deleted.
+            // Delete all downloaded episodes. Try each file, alert if any were unable to be deleted.
 
             DirectoryInfo directoryInfo = new DirectoryInfo(Config.GetConfig().AudioFilesDirectory);
             int numDeletedFiles = 0;
@@ -277,6 +273,7 @@ namespace PodcastApp.ViewModel
                 catch (Exception)
                 {
                     System.Diagnostics.Debug.WriteLine("Could not delete file {0}", fileInfo.Name);
+                    MessageBox.Show("Could not delete file " + fileInfo.Name, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 
