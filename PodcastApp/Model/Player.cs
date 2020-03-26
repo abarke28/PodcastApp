@@ -18,6 +18,8 @@ namespace PodcastApp.Model
 {
     public class Player : INotifyPropertyChanged
     {
+        // Properties
+
         private MediaPlayer _player;
 
         private bool _isPlaying;
@@ -176,6 +178,8 @@ namespace PodcastApp.Model
             }
         }
 
+        // Constructors
+
         public Player()
         {
             IsPlaying = false;
@@ -186,6 +190,8 @@ namespace PodcastApp.Model
             ForwardImageSource = AppResources.FORWARD_10_IMAGE;
             AudioStateImageSource = AppResources.PLAYING_SOUND_IMAGE;
         }
+
+        // Methods
 
         public async void PlayAudio()
         {
@@ -215,6 +221,8 @@ namespace PodcastApp.Model
             _player.Open(new Uri(filePath + resolvedTitle + @".mp3"));
 
             MediaIsLoaded = true;
+
+            System.Diagnostics.Debug.WriteLine("Media is Loaded");
 
             _player.Position = TimeSpan.Zero;
             _player.Play();
@@ -338,6 +346,8 @@ namespace PodcastApp.Model
 
             return resolvedTitle;
         }
+
+        // Events & Handlers
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string property)
