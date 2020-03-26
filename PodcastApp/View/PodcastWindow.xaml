@@ -138,21 +138,21 @@
                            Width="50"
                            Stretch="Fill"/>
                     <Button BorderThickness="0"
-                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay}"
+                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                             Command="{Binding RewindEpisodeCommand}">
                         <Image Width="40"
                                Height="28"
                                Source="{Binding Player.ReplayImageSource}"/>
                     </Button>
                     <Button BorderThickness="0"
-                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay}"
+                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                             Command="{Binding PauseResumeEpisodeCommand}">
                         <Image Width="40"
                                Height="35"
                                Source="{Binding Player.PlayPauseImageSource}"/>
                     </Button>
                     <Button BorderThickness="0"
-                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay}"
+                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                             Command="{Binding ForwardEpisodeCommand}">
                         <Image Width="40"
                                Height="28"
@@ -166,7 +166,7 @@
                                VerticalAlignment="Center"
                                FontWeight="Bold"/>
                     <Button BorderThickness="0"
-                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay}"
+                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                             Command="{Binding MuteUnmuteEpisodeCommand}">
                         <Image Width="40"
                                Height="25"

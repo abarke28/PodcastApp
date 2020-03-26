@@ -19,6 +19,8 @@ namespace PodcastApp.ViewModel
 {
     public class MainVM : INotifyPropertyChanged
     {
+        // Properties
+
         private ObservableCollection<Podcast> _podcasts;
         public ObservableCollection<Podcast> Podcasts
         {
@@ -86,6 +88,9 @@ namespace PodcastApp.ViewModel
                 OnPropertyChanged("SelectedEpisode");
             }
         }
+
+        // Commands
+
         public ICommand ExitCommand { get; set; }
         public ICommand NewPodcastCommand { get; set; }
         public ICommand PlayEpisodeCommand { get; set; }
@@ -94,6 +99,9 @@ namespace PodcastApp.ViewModel
         public ICommand ForwardEpisodeCommand { get; set; }
         public ICommand MuteUnmuteEpisodeCommand { get; set; }
         public ICommand ClearDownloadsCommand { get; set; }
+
+        // Constructors
+
         public MainVM()
         {
             Podcasts = new ObservableCollection<Podcast>();
@@ -103,6 +111,9 @@ namespace PodcastApp.ViewModel
             InstantiateCommands();
             ReadPodcasts();
         }
+
+        // Methods 
+
         public void ReadPodcasts()
         {
             // Summary
@@ -154,22 +165,11 @@ namespace PodcastApp.ViewModel
             ExitCommand = new BaseCommand(x => true, x => ExitApplication());
             NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
             PlayEpisodeCommand = new BaseCommand(e => true, e => PlayEpisode(e as SyndicationItem));
-            PauseResumeEpisodeCommand = new BaseCommand(b => (bool)b, x => PauseResumeEpisode());
-            RewindEpisodeCommand = new BaseCommand(b => (bool)b, x => RewindEpisode());
-            ForwardEpisodeCommand = new BaseCommand(b => (bool)b, x => FastForwardEpisode());
-            MuteUnmuteEpisodeCommand = new BaseCommand(b => (bool)b, x => MuteUnmuteEpisode());
+            PauseResumeEpisodeCommand = new BaseCommand(BasePredicate, x => PauseResumeEpisode());
+            RewindEpisodeCommand = new BaseCommand(BasePredicate, x => RewindEpisode());
+            ForwardEpisodeCommand = new BaseCommand(BasePredicate, x => FastForwardEpisode());
+            MuteUnmuteEpisodeCommand = new BaseCommand(BasePredicate, x => MuteUnmuteEpisode());
             ClearDownloadsCommand = new BaseCommand(x => true, x => ClearDownloadedEpisodes());
-        }
-        public void RaiseCanExecuteChangedMethods(BaseCommand[] commands)
-        {
-            // Summary
-            //
-            // Call the RaiseCanExecuteChanged method for specified commands so binding can update
-
-            foreach (BaseCommand bc in commands)
-            {
-                bc.RaiseCanExecuteChanged();
-            }
         }
         public void ExitApplication()
         {
@@ -296,6 +296,13 @@ namespace PodcastApp.ViewModel
 
             System.Diagnostics.Debug.WriteLine("Deleted {0}/{1} files", numDeletedFiles, numTotalFiles);
         }
+        public bool BasePredicate(object parameter)
+        {
+            return (bool)parameter;
+        }
+
+        // Events & Handlers
+
         private void OnPropertyChanged(string property)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
@@ -319,6 +326,17 @@ namespace PodcastApp.ViewModel
 
                     RaiseCanExecuteChangedMethods(commands);
                     break;
+            }
+        }
+        public void RaiseCanExecuteChangedMethods(BaseCommand[] commands)
+        {
+            // Summary
+            //
+            // Call the RaiseCanExecuteChanged method for specified commands so binding can update
+
+            foreach (BaseCommand bc in commands)
+            {
+                bc.RaiseCanExecuteChanged();
             }
         }
     }
