@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace PodcastApp.ViewModel.Converters
 {
-    public class BooleanToVisibilityConverter : IValueConverter
+    public class BooleanToVisibilityCollapsedConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -18,10 +18,10 @@ namespace PodcastApp.ViewModel.Converters
                     return "Visible";
 
                 case false:
-                    return "Hidden";
+                    return "Collapsed";
             }
 
-            return "Hidden";
+            return "Collapsed";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

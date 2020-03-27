@@ -10,7 +10,9 @@
         Title="Poor Yorrick Podcasts" Height="650" Width="750">
     <Window.Resources>
         <vm:MainVM x:Key="vm"/>
-        <cv:BooleanToVisibilityConverter x:Key="b2v"/>
+        <cv:BooleanToVisibilityHiddenConverter x:Key="b2vh"/>
+        <cv:BooleanToVisibilityCollapsedConverter x:Key="b2vc"/>
+        <cv:BooleanToVisibilityCollapsedInvertingConverter x:Key="b2vic"/>
         <SolidColorBrush x:Key="StatusBarBackgroundColour" Color="#2f80ba"/>
         <SolidColorBrush x:Key="StatusBarForegroundColour" Color="#ffffff"/>
         <SolidColorBrush x:Key="ListItemContrastColour" Color="#5890cc"/>
@@ -206,7 +208,7 @@
                                    HorizontalAlignment="Center"
                                    Padding="5,0">
                         <ProgressBar IsIndeterminate="{Binding Player.IsDownloading}"
-                                     Visibility="{Binding Player.IsDownloading, Converter={StaticResource b2v}}"
+                                     Visibility="{Binding Player.IsDownloading, Converter={StaticResource b2vh}}"
                                      Minimum="0"
                                      Maximum="100"
                                      Width="100"

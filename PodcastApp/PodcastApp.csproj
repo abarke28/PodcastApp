@@ -119,7 +119,9 @@
     </Compile>
     <Compile Include="utils\Serializer.cs" />
     <Compile Include="ViewModel\Commands\BaseCommand.cs" />
-    <Compile Include="ViewModel\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="ViewModel\Converters\BooleanToVisibilityCollapsedConverter.cs" />
+    <Compile Include="ViewModel\Converters\BooleanToVisibilityCollapsedInvertingConverter.cs" />
+    <Compile Include="ViewModel\Converters\BooleanToVisibilityHiddenConverter.cs" />
     <Compile Include="ViewModel\DatabaseHelper.cs" />
     <Compile Include="ViewModel\MainVM.cs" />
     <Compile Include="ViewModel\RssHelper.cs" />
