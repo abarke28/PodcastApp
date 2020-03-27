@@ -298,6 +298,9 @@ namespace PodcastApp.ViewModel
         }
         public bool BasePredicate(object parameter)
         {
+
+            System.Diagnostics.Debug.WriteLine("In MainVM.BasePredicate() (CanExecute)");
+            System.Diagnostics.Debug.WriteLine("Parameter is " + parameter.ToString() + " and Player.MediaIsLoaded is " + Player.MediaIsLoaded.ToString());
             return (bool)parameter;
         }
 
@@ -318,6 +321,8 @@ namespace PodcastApp.ViewModel
             switch (property)
             {
                 case "MediaIsLoaded":
+
+                    System.Diagnostics.Debug.WriteLine("In MainVM.PlayerPropertyChanged for MediaIsLoaded");
                     BaseCommand[] commands = new BaseCommand[]{
                         PauseResumeEpisodeCommand as BaseCommand,
                         RewindEpisodeCommand as BaseCommand,
@@ -328,11 +333,14 @@ namespace PodcastApp.ViewModel
                     break;
             }
         }
-        public void RaiseCanExecuteChangedMethods(BaseCommand[] commands)
+        public void RaiseCanExecuteChangedMethods(params BaseCommand[] commands)
         {
             // Summary
             //
             // Call the RaiseCanExecuteChanged method for specified commands so binding can update
+
+
+            System.Diagnostics.Debug.WriteLine("In Player.RaiseCanExecuteChangedMethods()");
 
             foreach (BaseCommand bc in commands)
             {

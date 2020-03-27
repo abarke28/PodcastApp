@@ -138,22 +138,22 @@
                            Width="50"
                            Stretch="Fill"/>
                     <Button BorderThickness="0"
-                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                            Command="{Binding RewindEpisodeCommand}">
+                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay}"
+                            Command="{Binding RewindEpisodeCommand, Mode=OneWay}">
                         <Image Width="40"
                                Height="28"
                                Source="{Binding Player.ReplayImageSource}"/>
                     </Button>
                     <Button BorderThickness="0"
-                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                            Command="{Binding PauseResumeEpisodeCommand}">
+                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay}"
+                            Command="{Binding PauseResumeEpisodeCommand, Mode=OneWay}">
                         <Image Width="40"
                                Height="35"
                                Source="{Binding Player.PlayPauseImageSource}"/>
                     </Button>
                     <Button BorderThickness="0"
-                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                            Command="{Binding ForwardEpisodeCommand}">
+                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay}"
+                            Command="{Binding ForwardEpisodeCommand, Mode=OneWay}">
                         <Image Width="40"
                                Height="28"
                                Source="{Binding Player.ForwardImageSource}"/>
@@ -166,8 +166,8 @@
                                VerticalAlignment="Center"
                                FontWeight="Bold"/>
                     <Button BorderThickness="0"
-                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                            Command="{Binding MuteUnmuteEpisodeCommand}">
+                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay}"
+                            Command="{Binding MuteUnmuteEpisodeCommand, Mode=OneWay}">
                         <Image Width="40"
                                Height="25"
                                Source="{Binding Player.AudioStateImageSource}"/>
