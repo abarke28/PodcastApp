@@ -182,6 +182,7 @@ namespace PodcastApp.Model
 
         public Player()
         {
+            _player = new MediaPlayer();
             IsPlaying = false;
             MediaIsLoaded = false;
             ThumbnailSource = AppResources.BLANK_IMAGE;
@@ -220,11 +221,12 @@ namespace PodcastApp.Model
 
             _player.Open(new Uri(filePath + resolvedTitle + @".mp3"));
 
+            System.Diagnostics.Debug.WriteLine("MediaIsLoaded is True - Player.PlayAudio()");
             MediaIsLoaded = true;
 
-            System.Diagnostics.Debug.WriteLine("Media is Loaded");
-
             _player.Position = TimeSpan.Zero;
+
+            System.Diagnostics.Debug.WriteLine("Playback of " + PlayingEpisode.Title.Text + " has stated");
             _player.Play();
 
             IsPlaying = true;
@@ -256,6 +258,7 @@ namespace PodcastApp.Model
             _player.Stop();
             _player.Close();
             IsPlaying = false;
+            System.Diagnostics.Debug.WriteLine("MediaIsLoaded is False - Player.StopAudio()");
             MediaIsLoaded = false;
             ThumbnailSource = AppResources.BLANK_IMAGE;
         }

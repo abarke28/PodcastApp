@@ -52,13 +52,7 @@ namespace PodcastApp.ViewModel
             set
             {
                 if (_player == value) return;
-
-                if (_player != null) Player.PropertyChanged -= (s, e) => OnPlayerPropertyChanged(e.PropertyName);
-
                 _player = value;
-
-                if (value != null) Player.PropertyChanged += (s, e) => OnPlayerPropertyChanged(e.PropertyName);
-
                 OnPropertyChanged("Player");
             }
         }
@@ -165,10 +159,10 @@ namespace PodcastApp.ViewModel
             ExitCommand = new BaseCommand(x => true, x => ExitApplication());
             NewPodcastCommand = new BaseCommand(x => true, x => SubscribePodcast());
             PlayEpisodeCommand = new BaseCommand(e => true, e => PlayEpisode(e as SyndicationItem));
-            PauseResumeEpisodeCommand = new BaseCommand(BasePredicate, x => PauseResumeEpisode());
-            RewindEpisodeCommand = new BaseCommand(BasePredicate, x => RewindEpisode());
-            ForwardEpisodeCommand = new BaseCommand(BasePredicate, x => FastForwardEpisode());
-            MuteUnmuteEpisodeCommand = new BaseCommand(BasePredicate, x => MuteUnmuteEpisode());
+            PauseResumeEpisodeCommand = new BaseCommand(x => true, x => PauseResumeEpisode());
+            RewindEpisodeCommand = new BaseCommand(x => true, x => RewindEpisode());
+            ForwardEpisodeCommand = new BaseCommand(x => true, x => FastForwardEpisode());
+            MuteUnmuteEpisodeCommand = new BaseCommand(x => true, x => MuteUnmuteEpisode());
             ClearDownloadsCommand = new BaseCommand(x => true, x => ClearDownloadedEpisodes());
         }
         public void ExitApplication()
@@ -296,10 +290,6 @@ namespace PodcastApp.ViewModel
 
             System.Diagnostics.Debug.WriteLine("Deleted {0}/{1} files", numDeletedFiles, numTotalFiles);
         }
-        public bool BasePredicate(object parameter)
-        {
-            return (bool)parameter;
-        }
 
         // Events & Handlers
 
@@ -308,36 +298,5 @@ namespace PodcastApp.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPlayerPropertyChanged(string property)
-        {
-            // Summary
-            //
-            // Handle property changes in Player, many are used to control bindings and command
-            // CanExecute logic
-
-            switch (property)
-            {
-                case "MediaIsLoaded":
-                    BaseCommand[] commands = new BaseCommand[]{
-                        PauseResumeEpisodeCommand as BaseCommand,
-                        RewindEpisodeCommand as BaseCommand,
-                        ForwardEpisodeCommand as BaseCommand,
-                        MuteUnmuteEpisodeCommand as BaseCommand};
-
-                    RaiseCanExecuteChangedMethods(commands);
-                    break;
-            }
-        }
-        public void RaiseCanExecuteChangedMethods(BaseCommand[] commands)
-        {
-            // Summary
-            //
-            // Call the RaiseCanExecuteChanged method for specified commands so binding can update
-
-            foreach (BaseCommand bc in commands)
-            {
-                bc.RaiseCanExecuteChanged();
-            }
-        }
     }
 }
