@@ -48,7 +48,7 @@
                     <ListView ItemsSource="{Binding Podcasts}"
                               SelectedItem="{Binding SelectedPodcast, Mode=TwoWay}"
                               HorizontalAlignment="Stretch"
-                              Height="500"
+                              Height="490"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                               BorderBrush="White">
@@ -84,6 +84,10 @@
                 </StackPanel> <!--Podcasts List-->
                 <StackPanel Grid.Column="1"
                             Grid.Row="0">
+                    
+                </StackPanel> <!--Episodes Loading Pane-->
+                <StackPanel Grid.Column="1"
+                            Grid.Row="0">
                     <Label>
                         <TextBlock Text="Episodes" FontSize="24" FontWeight="Bold"/>
                     </Label>
@@ -91,7 +95,7 @@
                               SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}"
                               HorizontalAlignment="Stretch"
                               HorizontalContentAlignment="Stretch"
-                              Height="495"
+                              Height="490"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Visible"
                               BorderBrush="White">

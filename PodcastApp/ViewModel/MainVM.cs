@@ -108,18 +108,17 @@ namespace PodcastApp.ViewModel
 
         // Methods 
 
-        public void ReadPodcasts()
+        public async void ReadEpisodesFromFeedAsync(string rssLink)
         {
-            // Summary
-            // Fetch list of Subscribed Podcasts from MS SQL Database. Utilizing utilities in DatabaseHelper.cs
+            //Summary
+            //
+            // Fetches episodes asynchronously using RssHelper.GetInfoAsync
 
-            Podcasts.Clear();
-            
-            var podcasts = DatabaseHelper.GetPodcasts().OrderBy(p => p.Title);
+            var feed = await RssHelper.GetFeedAsync(rssLink).ConfigureAwait(true);
 
-            foreach(Podcast podcast in podcasts)
+            foreach(SyndicationItem episode in feed.Items)
             {
-                Podcasts.Add(podcast);
+                Episodes.Add(episode);
             }
         }
         public void ReadEpisodesFromFeed(string rssLink)
@@ -132,22 +131,23 @@ namespace PodcastApp.ViewModel
 
             var episodes = RssHelper.GetFeed(rssLink).Items;
 
-            foreach(SyndicationItem episode in episodes)
+            foreach (SyndicationItem episode in episodes)
             {
                 Episodes.Add(episode);
             }
         }
-        public async void ReadEpisodesFromFeedAsync(string rssLink)
+        public void ReadPodcasts()
         {
-            //Summary
-            //
-            // Fetches episodes asynchronously using RssHelper.GetInfoAsync
+            // Summary
+            // Fetch list of Subscribed Podcasts from MS SQL Database. Utilizing utilities in DatabaseHelper.cs
 
-            var feed = await RssHelper.GetFeedAsync(rssLink).ConfigureAwait(true);
+            Podcasts.Clear();
 
-            foreach(SyndicationItem episode in feed.Items)
+            var podcasts = DatabaseHelper.GetPodcasts().OrderBy(p => p.Title);
+
+            foreach (Podcast podcast in podcasts)
             {
-                Episodes.Add(episode);
+                Podcasts.Add(podcast);
             }
         }
         public void InstantiateCommands()
