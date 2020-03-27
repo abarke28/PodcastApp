@@ -12,6 +12,9 @@
         <Style TargetType="ScrollViewer">
             <Setter Property="Foreground" Value="#e9f2f7"/>
         </Style>
+        <SolidColorBrush x:Key="StatusBarBackgroundColour" Color="#2f80ba"/>
+        <SolidColorBrush x:Key="StatusBarForegroundColour" Color="#ffffff"/>
+        <SolidColorBrush x:Key="ListItemContrastColour" Color="#5890cc"/>
     </Window.Resources>
     <Grid DataContext="{Binding Source={StaticResource vm}}">
         <DockPanel>
@@ -34,6 +37,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="9*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.35*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Column="0"
                             Grid.Row="0">
@@ -68,7 +72,7 @@
                                             <TextBlock Text="{Binding Description}"
                                                        VerticalAlignment="Top"
                                                        TextWrapping="WrapWithOverflow"
-                                                       Foreground="#5890cc"
+                                                       Foreground="{StaticResource ListItemContrastColour}"
                                                        MaxHeight="30"/>
                                         </Label>
                                     </StackPanel>
@@ -111,7 +115,7 @@
                                         <Label Grid.Row="1" 
                                                HorizontalAlignment="Left">
                                             <TextBlock Text="{Binding PublishDate.LocalDateTime}"
-                                                       Foreground="#5890cc"/>
+                                                       Foreground="{StaticResource ListItemContrastColour}"/>
                                         </Label>
                                     </Grid>
                                     <Button Grid.Column="1"
@@ -132,7 +136,6 @@
                 </StackPanel> <!--Episodes List-->
                 <StackPanel Orientation="Horizontal"
                             Grid.Row="1"
-                            DockPanel.Dock="Bottom"
                             VerticalAlignment="Bottom"
                             Background="#e0e0de"
                             Height="50"
@@ -178,6 +181,27 @@
                                Source="{Binding Player.AudioStateImageSource}"/>
                     </Button>
                 </StackPanel> <!--Playback Bar-->
+                <StatusBar Grid.Row="2"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2"
+                           Foreground="{StaticResource StatusBarForegroundColour}"
+                           Background="{StaticResource StatusBarBackgroundColour}"
+                           MaxHeight="20">
+                    <StatusBarItem HorizontalAlignment="Left">
+                        <TextBlock Text="XYZ"/>
+                    </StatusBarItem>
+                    <StatusBarItem HorizontalAlignment="Right" Padding="5,0">
+                        <TextBlock Text="Downloading Podcast"/>
+                    </StatusBarItem>
+                    <StatusBarItem HorizontalAlignment="Right" Padding="5,0">
+                        <ProgressBar IsIndeterminate="True"
+                                     Minimum="0"
+                                     Maximum="100"
+                                     Width="100"
+                                     VerticalAlignment="Center"
+                                     Height="14"/>
+                    </StatusBarItem>
+                </StatusBar> <!--Status Bar-->
             </Grid>
         </DockPanel>
     </Grid>
