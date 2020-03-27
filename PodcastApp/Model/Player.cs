@@ -178,7 +178,7 @@ namespace PodcastApp.Model
                 switch (value)
                 {
                     case true:
-                        ProgressBarText = "Downloading Audio...";
+                        ProgressBarText = "Downloading Audio";
                         break;
 
                     case false:
