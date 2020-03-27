@@ -9,6 +9,9 @@
         Title="Poor Yorrick Podcasts" Height="650" Width="750">
     <Window.Resources>
         <vm:MainVM x:Key="vm"/>
+        <Style TargetType="ScrollViewer">
+            <Setter Property="Foreground" Value="#e9f2f7"/>
+        </Style>
     </Window.Resources>
     <Grid DataContext="{Binding Source={StaticResource vm}}">
         <DockPanel>
@@ -163,8 +166,10 @@
                                FontSize="20"
                                Width="520"
                                TextAlignment="Left"
-                               VerticalAlignment="Center"
-                               FontWeight="Bold"/>
+                               VerticalAlignment="Stretch"
+                               FontWeight="Bold">
+                        
+                    </TextBlock>
                     <Button BorderThickness="0"
                             IsEnabled="{Binding Player.MediaIsLoaded}"
                             Command="{Binding MuteUnmuteEpisodeCommand, Mode=OneWay}">
