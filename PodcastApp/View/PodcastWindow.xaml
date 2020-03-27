@@ -138,21 +138,21 @@
                            Width="50"
                            Stretch="Fill"/>
                     <Button BorderThickness="0"
-                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay}"
+                            IsEnabled="{Binding Player.MediaIsLoaded}"
                             Command="{Binding RewindEpisodeCommand, Mode=OneWay}">
                         <Image Width="40"
                                Height="28"
                                Source="{Binding Player.ReplayImageSource}"/>
                     </Button>
                     <Button BorderThickness="0"
-                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay}"
+                            IsEnabled="{Binding Player.MediaIsLoaded}"
                             Command="{Binding PauseResumeEpisodeCommand, Mode=OneWay}">
                         <Image Width="40"
                                Height="35"
                                Source="{Binding Player.PlayPauseImageSource}"/>
                     </Button>
                     <Button BorderThickness="0"
-                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay}"
+                            IsEnabled="{Binding Player.MediaIsLoaded}"
                             Command="{Binding ForwardEpisodeCommand, Mode=OneWay}">
                         <Image Width="40"
                                Height="28"
@@ -166,7 +166,7 @@
                                VerticalAlignment="Center"
                                FontWeight="Bold"/>
                     <Button BorderThickness="0"
-                            CommandParameter="{Binding Path=Player.MediaIsLoaded, Mode=OneWay}"
+                            IsEnabled="{Binding Player.MediaIsLoaded}"
                             Command="{Binding MuteUnmuteEpisodeCommand, Mode=OneWay}">
                         <Image Width="40"
                                Height="25"

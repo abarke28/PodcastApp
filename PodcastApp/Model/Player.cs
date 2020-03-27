@@ -78,8 +78,6 @@ namespace PodcastApp.Model
             {
                 if (_mediaIsLoaded == value) return;
                 _mediaIsLoaded = value;
-
-                System.Diagnostics.Debug.WriteLine("In MediaIsLoaded setter");
                 OnPropertyChanged("MediaIsLoaded");
             }
         }
@@ -357,7 +355,6 @@ namespace PodcastApp.Model
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string property)
         {
-            if (property == "MediaIsLoaded") System.Diagnostics.Debug.WriteLine("In Player.OnPropertyChanged for MediaIsLoaded");
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
     }
