@@ -256,8 +256,8 @@ namespace PodcastApp.Model
 
             _player.Stop();
             _player.Close();
+            IsMuted = false;
             IsPlaying = false;
-            System.Diagnostics.Debug.WriteLine("MediaIsLoaded is False - Player.StopAudio()");
             MediaIsLoaded = false;
             ThumbnailSource = AppResources.BLANK_IMAGE;
         }
