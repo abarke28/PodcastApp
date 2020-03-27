@@ -221,7 +221,6 @@ namespace PodcastApp.Model
 
             _player.Open(new Uri(filePath + resolvedTitle + @".mp3"));
 
-            System.Diagnostics.Debug.WriteLine("MediaIsLoaded is True - Player.PlayAudio()");
             MediaIsLoaded = true;
 
             _player.Position = TimeSpan.Zero;
