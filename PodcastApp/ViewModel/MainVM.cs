@@ -45,6 +45,18 @@ namespace PodcastApp.ViewModel
             }
         }
 
+        private bool _episodesLoading;
+        public bool EpisodesLoading
+        {
+            get { return _episodesLoading; }
+            set
+            {
+                if (_episodesLoading == value) return;
+                _episodesLoading = value;
+                OnPropertyChanged("EpisodesLoading");
+            }
+        }
+
         private Player _player;
         public Player Player
         {
@@ -114,7 +126,11 @@ namespace PodcastApp.ViewModel
             //
             // Fetches episodes asynchronously using RssHelper.GetInfoAsync
 
+            EpisodesLoading = true;
+
             var feed = await RssHelper.GetFeedAsync(rssLink).ConfigureAwait(true);
+
+            EpisodesLoading = false;
 
             foreach(SyndicationItem episode in feed.Items)
             {

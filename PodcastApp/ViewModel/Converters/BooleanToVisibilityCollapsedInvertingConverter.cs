@@ -19,6 +19,9 @@ namespace PodcastApp.ViewModel.Converters
 
                 case false:
                     return "Visible";
+
+                case null:
+                    return "Visible";
             }
 
             return "Visible";

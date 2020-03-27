@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PodcastApp.View"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:vm="clr-namespace:PodcastApp.ViewModel"
         xmlns:cv="clr-namespace:PodcastApp.ViewModel.Converters"
         mc:Ignorable="d"
@@ -16,6 +17,7 @@
         <SolidColorBrush x:Key="StatusBarBackgroundColour" Color="#2f80ba"/>
         <SolidColorBrush x:Key="StatusBarForegroundColour" Color="#ffffff"/>
         <SolidColorBrush x:Key="ListItemContrastColour" Color="#5890cc"/>
+        <SolidColorBrush x:Key="LoadingSpinnerColour" Color="#2f80ba"/>
     </Window.Resources>
     <Grid DataContext="{Binding Source={StaticResource vm}}">
         <DockPanel>
@@ -29,7 +31,7 @@
                     <MenuItem Header="Exit"
                               Command="{Binding ExitCommand}"/>
                 </MenuItem>
-            </Menu>
+            </Menu> <!--Menubar-->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -83,8 +85,15 @@
                     </ListView>
                 </StackPanel> <!--Podcasts List-->
                 <StackPanel Grid.Column="1"
-                            Grid.Row="0">
-                    
+                            Grid.Row="0"
+                            Visibility="{Binding EpisodesLoading, Converter={StaticResource b2vc}}"
+                            VerticalAlignment="Center">
+                    <fa:ImageAwesome Icon="Spinner" 
+                                     Spin="True" 
+                                     Height="48" 
+                                     Width="48"
+                                     Opacity="0.75"
+                                     Foreground="{StaticResource LoadingSpinnerColour}"/>
                 </StackPanel> <!--Episodes Loading Pane-->
                 <StackPanel Grid.Column="1"
                             Grid.Row="0">
@@ -96,6 +105,7 @@
                               HorizontalAlignment="Stretch"
                               HorizontalContentAlignment="Stretch"
                               Height="490"
+                              Visibility="{Binding EpisodesLoading, Converter={StaticResource b2vic}}"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Visible"
                               BorderBrush="White">

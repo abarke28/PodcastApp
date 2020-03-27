@@ -19,6 +19,9 @@ namespace PodcastApp.ViewModel.Converters
 
                 case false:
                     return "Collapsed";
+
+                case null:
+                    return "Collapsed";
             }
 
             return "Collapsed";
