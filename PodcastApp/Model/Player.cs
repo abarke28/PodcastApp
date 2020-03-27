@@ -154,6 +154,42 @@ namespace PodcastApp.Model
             }
         }
 
+        private string _progressBarText;
+        public string ProgressBarText
+        {
+            get { return _progressBarText; }
+            set
+            {
+                if (_progressBarText == value) return;
+                _progressBarText = value;
+                OnPropertyChanged("ProgressBarText");
+            }
+        }
+
+        private bool _isDownloading;
+        public bool IsDownloading
+        {
+            get { return _isDownloading; }
+            set
+            {
+                if (_isDownloading == value) return;
+                _isDownloading = value;
+
+                switch (value)
+                {
+                    case true:
+                        ProgressBarText = "Downloading Audio...";
+                        break;
+
+                    case false:
+                        ProgressBarText = String.Empty;
+                        break;
+                }
+
+                OnPropertyChanged("IsDownloading");
+            }
+        }
+
         private string _audioSource;
         public string AudioSource
         {
@@ -185,6 +221,7 @@ namespace PodcastApp.Model
             _player = new MediaPlayer();
             IsPlaying = false;
             MediaIsLoaded = false;
+            ProgressBarText = String.Empty;
             ThumbnailSource = AppResources.BLANK_IMAGE;
             PlayPauseImageSource = AppResources.PLAY_IMAGE;
             ReplayImageSource = AppResources.REWIND_10_IMAGE;
@@ -211,10 +248,14 @@ namespace PodcastApp.Model
             // Check if file has already been downloaded
             if (!File.Exists(filePath + resolvedTitle + @".mp3"))
             {
+                IsDownloading = true;
+
                 using (WebClient webClient = new WebClient())
                 {
                     await webClient.DownloadFileTaskAsync(AudioSource, filePath + resolvedTitle + @".mp3");
                 }
+
+                IsDownloading = false;
             }
 
             if (_player == null) _player = new MediaPlayer();

@@ -201,17 +201,17 @@
                         </ItemsPanelTemplate>
                     </StatusBar.ItemsPanel>
                     <StatusBarItem Grid.Column="0" >
-                        <TextBlock Text="XYZ"/>
+                        <TextBlock Text="Disk Space Occupied: "/>
                     </StatusBarItem>
                     <StatusBarItem Grid.Column="3" 
                                    HorizontalAlignment="Right" 
                                    Padding="5,0">
-                        <TextBlock Text="Downloading Podcast"/>
+                        <TextBlock Text="{Binding Player.ProgressBarText}"/>
                     </StatusBarItem>
                     <StatusBarItem Grid.Column="4"
                                    HorizontalAlignment="Center"
                                    Padding="5,0">
-                        <ProgressBar IsIndeterminate="True"
+                        <ProgressBar IsIndeterminate="{Binding Player.IsDownloading}"
                                      Minimum="0"
                                      Maximum="100"
                                      Width="100"

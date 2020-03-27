@@ -83,18 +83,6 @@ namespace PodcastApp.ViewModel
             }
         }
 
-        private string _progressBarText;
-        public string ProgressBarText
-        {
-            get { return _progressBarText; }
-            set
-            {
-                if (_progressBarText == value) return;
-                _progressBarText = value;
-                OnPropertyChanged("ProgressBarText");
-            }
-        }
-
         // Commands
 
         public ICommand ExitCommand { get; set; }
