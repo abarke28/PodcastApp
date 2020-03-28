@@ -105,6 +105,7 @@ namespace PodcastApp.ViewModel
         public ICommand ForwardEpisodeCommand { get; set; }
         public ICommand MuteUnmuteEpisodeCommand { get; set; }
         public ICommand ClearDownloadsCommand { get; set; }
+        public ICommand UnsubscribeCommand { get; set; }
 
         // Constructors
 
@@ -180,6 +181,7 @@ namespace PodcastApp.ViewModel
             ForwardEpisodeCommand = new BaseCommand(x => true, x => FastForwardEpisode());
             MuteUnmuteEpisodeCommand = new BaseCommand(x => true, x => MuteUnmuteEpisode());
             ClearDownloadsCommand = new BaseCommand(x => true, x => ClearDownloadedEpisodes());
+            UnsubscribeCommand = new BaseCommand(x => true, p => UnsubscribePodcast(p as Podcast));
         }
         public void ExitApplication()
         {
@@ -216,6 +218,18 @@ namespace PodcastApp.ViewModel
             }
 
             DatabaseHelper.InsertPodcast(podcast);
+
+            ReadPodcasts();
+        }
+        public void UnsubscribePodcast(Podcast podcast)
+        {
+            // Summary
+            //
+            // Unsubscribe from provided podcast, then refresh podcast list
+
+            DatabaseHelper.DeletePodcast(podcast);
+
+            SelectedPodcast = null;
 
             ReadPodcasts();
         }

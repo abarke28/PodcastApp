@@ -50,6 +50,9 @@ namespace PodcastApp.ViewModel
             {
                 PodcastAppEntities1 dbContext = new PodcastAppEntities1();
 
+                // Need to attach entity to context since it was retrieved by a different context
+                dbContext.Podcasts.Attach(podcast);
+
                 dbContext.Podcasts.Remove(podcast);
                 dbContext.SaveChanges();
             }
