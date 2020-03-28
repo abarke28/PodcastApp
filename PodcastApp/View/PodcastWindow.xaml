@@ -17,6 +17,7 @@
         <SolidColorBrush x:Key="StatusBarBackgroundColour" Color="#2f80ba"/>
         <SolidColorBrush x:Key="StatusBarForegroundColour" Color="#ffffff"/>
         <SolidColorBrush x:Key="ListItemContrastColour" Color="#5890cc"/>
+        <SolidColorBrush x:Key="PlaybackBarBackgroundColour" Color="#e0e0de"/>
         <SolidColorBrush x:Key="LoadingSpinnerColour" Color="#2f80ba"/>
     </Window.Resources>
     <Grid DataContext="{Binding Source={StaticResource vm}}">
@@ -160,7 +161,7 @@
                 <StackPanel Grid.Row="1"
                             Orientation="Horizontal"
                             VerticalAlignment="Bottom"
-                            Background="#e0e0de"
+                            Background="{StaticResource PlaybackBarBackgroundColour}"
                             Height="50"
                             Grid.ColumnSpan="2">
                     <Image Source="{Binding Player.ThumbnailSource}" 

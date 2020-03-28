@@ -225,7 +225,7 @@ namespace PodcastApp.ViewModel
         {
             // Summary
             //
-            // Unsubscribe from provided podcast, then refresh podcast list
+            // Unsubscribe from provided podcast, remove Podcast Selection to prevent crash, then refresh podcast list
 
             DatabaseHelper.DeletePodcast(podcast);
 
