@@ -67,8 +67,7 @@
                 <MenuItem Header="Options">
                     <MenuItem Header="Edit Config"/>
                 </MenuItem>
-            </Menu>
-            <!--Menubar-->
+            </Menu> <!--Menubar-->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -166,6 +165,7 @@
                                             <RowDefinition Height="auto"/>
                                             <RowDefinition Height="auto"/>
                                         </Grid.RowDefinitions>
+                                        
                                         <Label Grid.Row="0" 
                                                HorizontalAlignment="Left">
                                             <TextBlock Text="{Binding Title.Text}"
