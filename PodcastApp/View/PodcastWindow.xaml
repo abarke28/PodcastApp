@@ -17,18 +17,40 @@
         <SolidColorBrush x:Key="StatusBarBackgroundColour" Color="#2f80ba"/>
         <SolidColorBrush x:Key="StatusBarForegroundColour" Color="#ffffff"/>
         <SolidColorBrush x:Key="ListItemContrastColour" Color="#5890cc"/>
-        <SolidColorBrush x:Key="PlaybackBarBackgroundColour" Color="#e0e0de"/>
+        <SolidColorBrush x:Key="PlaybackBarColour" Color="#e0e0de"/>
         <SolidColorBrush x:Key="LoadingSpinnerColour" Color="#2f80ba"/>
         <Style TargetType="Button" x:Key="PlaybackControl">
+            <Setter Property="BorderThickness" Value="0"/>
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" Value="{StaticResource PlaybackBarBackgroundColour}"/>
-                    <Setter Property="Foreground" Value="{StaticResource PlaybackBarBackgroundColour}"/>
+                    <Setter Property="Background" Value="{StaticResource PlaybackBarColour}"/>
+                    <Setter Property="Foreground" Value="{StaticResource PlaybackBarColour}"/>
                     <Setter Property="Opacity" Value="0.5"/>
                 </Trigger>
             </Style.Triggers>
-            <Setter Property="BorderThickness" Value="0"/>
-        </Style>       
+        </Style>
+        <ControlTemplate x:Key="PlaybackBarButton" TargetType="{x:Type Button}">
+            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsDefaulted" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBEE6FD"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF2C628B"/>
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
     </Window.Resources>
     <Grid DataContext="{Binding Source={StaticResource vm}}">
         <DockPanel>
@@ -45,7 +67,8 @@
                 <MenuItem Header="Options">
                     <MenuItem Header="Edit Config"/>
                 </MenuItem>
-            </Menu> <!--Menubar-->
+            </Menu>
+            <!--Menubar-->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -173,7 +196,7 @@
                 </StackPanel> <!--Episodes List-->
                 <StackPanel Grid.Row="1"
                             Orientation="Horizontal"
-                            Background="{StaticResource PlaybackBarBackgroundColour}"
+                            Background="{StaticResource PlaybackBarColour}"
                             VerticalAlignment="Bottom"
                             Height="50"
                             Grid.ColumnSpan="2">
@@ -182,21 +205,24 @@
                            Stretch="Fill"/>
                     <Button Style="{StaticResource PlaybackControl}"
                             IsEnabled="{Binding Player.MediaIsLoaded}"
-                            Command="{Binding RewindEpisodeCommand, Mode=OneWay}">
+                            Command="{Binding RewindEpisodeCommand, Mode=OneWay}"
+                            Template="{StaticResource PlaybackBarButton}">
                         <Image Width="40"
                                Height="28"
                                Source="{Binding Player.ReplayImageSource}"/>
                     </Button>
                     <Button Style="{StaticResource PlaybackControl}"
                             IsEnabled="{Binding Player.MediaIsLoaded}"
-                            Command="{Binding PauseResumeEpisodeCommand, Mode=OneWay}">
+                            Command="{Binding PauseResumeEpisodeCommand, Mode=OneWay}" 
+                            Template="{StaticResource PlaybackBarButton}">
                         <Image Width="40"
                                Height="35"
                                Source="{Binding Player.PlayPauseImageSource}"/>
                     </Button>
                     <Button Style="{StaticResource PlaybackControl}"
                             IsEnabled="{Binding Player.MediaIsLoaded}"
-                            Command="{Binding ForwardEpisodeCommand, Mode=OneWay}">
+                            Command="{Binding ForwardEpisodeCommand, Mode=OneWay}"
+                            Template="{StaticResource PlaybackBarButton}">
                         <Image Width="40"
                                Height="28"
                                Source="{Binding Player.ForwardImageSource}"/>
@@ -210,7 +236,8 @@
                                FontWeight="Bold"/>
                     <Button Style="{StaticResource PlaybackControl}"
                             IsEnabled="{Binding Player.MediaIsLoaded}"
-                            Command="{Binding MuteUnmuteEpisodeCommand, Mode=OneWay}">
+                            Command="{Binding MuteUnmuteEpisodeCommand, Mode=OneWay}"
+                            Template="{StaticResource PlaybackBarButton}">
                         <Image Width="40"
                                Height="25"
                                Source="{Binding Player.AudioStateImageSource}"/>
