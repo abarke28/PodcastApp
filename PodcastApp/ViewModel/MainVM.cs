@@ -78,8 +78,12 @@ namespace PodcastApp.ViewModel
                 if (_selectedPodcast == value) return;
                 _selectedPodcast = value;
                 OnPropertyChanged("SelectedPodcast");
-                Episodes.Clear();
-                ReadEpisodesFromFeedAsync(SelectedPodcast.RssLink);
+
+                if (value != null)
+                {
+                    Episodes.Clear();
+                    ReadEpisodesFromFeedAsync(SelectedPodcast.RssLink);
+                }
             }
         }
 
@@ -207,6 +211,7 @@ namespace PodcastApp.ViewModel
             podcast.RssLink = rssLink;
             podcast.Title = syndicationFeed.Title.Text;
             podcast.ThumbnailFileUrl = syndicationFeed.ImageUrl.OriginalString;
+            podcast.Description = syndicationFeed.Description.Text;
 
             using (WebClient client = new WebClient())
             {
@@ -232,6 +237,7 @@ namespace PodcastApp.ViewModel
             SelectedPodcast = null;
 
             ReadPodcasts();
+            Episodes.Clear();
         }
         public void PlayEpisode(SyndicationItem episode)
         {
